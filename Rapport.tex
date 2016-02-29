@@ -1,0 +1,143 @@
+\documentclass[12pt, a4paper]{article}
+%-------------------------------------------------
+%       PACKAGES
+%-------------------------------------------------
+\usepackage[utf8x]{inputenc}          % Allows the user to input accented characters directly from the keyboard
+\usepackage[T1]{fontenc}              % Oriented to output, that is, what fonts to use for printing characters 
+\usepackage[danish]{babel}            % The language, you are writing in - you should be able to change to english
+
+\usepackage{caption}                  % You can create captions for your tables, pictures etc. AND YOU WANT TO DO THAT
+\usepackage{wrapfig}                  % Allows in-line images if needed
+\usepackage{hyperref}                 % Allows you to create hyperlinks within the document
+\usepackage{url}                      % Enables typesetting of hyperlinks
+
+\usepackage{amsmath,amsfonts,amssymb} % Math in your tex 
+\usepackage{mathtools}                % Math in your tex 
+
+\usepackage{csquotes}                 % Provides advanced facilities for inline and display quotations
+\usepackage[titletoc]{appendix}       % Names appendices "Appendix A" instead of just A in Contents
+
+\usepackage{pdfpages}                 % We can now import pdf files to our tex file - win!
+\usepackage{graphicx}                 % We can now import pictures - uhlalalah!
+\usepackage{float}                    % Pictures stay were i tell them
+
+\usepackage{algorithm}                % Beautiful algorithms
+\usepackage{algpseudocode}            % Beautiful pseudocode
+
+\usepackage{natbib}                   % Bibliography stuff
+
+\usepackage{enumitem}                 % Control the layout of enumerate, itemize and description
+\usepackage{fancyhdr}                 % Fancy header and footer
+\usepackage{booktabs}                 % Nice tables
+\usepackage{changepage}               % Change the page layout in the middle of a document
+\usepackage{tipa}                     % Fonts
+
+\usepackage{listings}                 % Typesetting programs
+\usepackage{color}                    % Color management
+\usepackage{wallpaper}
+\usepackage{palatino}
+
+\setlength\parindent{0pt}             % Removes the indent on first line of each each section
+
+%-------------------------------------------------
+%       FSHARP LISTINGS
+%-------------------------------------------------
+
+% Kan måske erstates med \usepackage{clrscode3e}
+
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{turqusnumbers}{rgb}{0.17,0.57,0.69}
+\definecolor{redstrings}{rgb}{0.5,0,0}
+
+\lstdefinelanguage{FSharp}
+                {morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, and, for, in, do, begin, end, fun, function, try, mutable, if, then, else},
+    keywordstyle=\color{bluekeywords},
+    sensitive=false,
+    morecomment=[l][\color{greencomments}]{///},
+    morecomment=[l][\color{greencomments}]{//},
+    morecomment=[s][\color{greencomments}]{{(*}{*)}},
+    morestring=[b]",
+    stringstyle=\color{redstrings}
+    }
+
+\lstset{language=FSharp, breaklines = true, stepnumber = 1, firstnumber = 1, numbers = left}              % set \lstlisting to always parse text as F# code
+
+%-------------------------------------------------
+%       DOCUMENT CONFIGURATIONS
+%-------------------------------------------------
+\fancyhf{}
+\hypersetup{colorlinks=false,hidelinks, citecolor=black, urlcolor=black}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil} % Math in your tex 
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor} % Math in your tex
+
+
+%%  Begin document
+%%  ==================================================================
+\begin{document}
+
+%   Forside
+%   ==================================================================
+    \includepdf[pages={-}]{forside.pdf}
+
+\section{Problembeskrivelse}
+
+\section{Krav}
+\begin{itemize}
+  \item Dynamisk webplatform, som kan interageres med
+  \item Generering af pseudo-tilfældige typer/udtryk/funktion
+  \item Skal kunne tage imod input fra brugeren
+  \item Progressiv sværhedsgrad som er brugervenlig
+  \item God, velovervejet og forståelig feedback
+  \item Generering af tilfælde men struktureret problemtyper
+  \item Generering af rapport/statisik til underviser/instruktør
+  \item Adminpanel/API
+  \item Aritmetiske udtryk
+    \begin{itemize}
+      \item Plus
+      \item Minus
+      \item Division
+      \item multiplikation
+    \end{itemize}
+  \item design
+    \begin{itemize}
+      \item Hjemmesiden skal kunne være skalerbar og fleksibel
+      \item Skal være let at kunne vedligholde ved ændringer/tilføjelser
+    \end{itemize}
+\end{itemize}
+
+\section{Design}
+
+Webdesign
+UML-diagram
+
+\section{Afprøvning}
+
+\section{Udviklingsmiljø}
+
+Vi har valgt at bruge ReSharper til at lave vores webplatform, men da vi gerne vil skrive denne i F\#, så har vi valgt at tilføje udvidelsen FSharper. FSharper er en pakke der er bygget til at udvide ReSharper til at kunne forstå F\# programmerings sproget. \\
+
+Da vi arbejder på flere operativ systemer, har vi valgt at bruge mono til at compilere vores F\# kode, for at få det mest stabile resultat henover platformene. Det er her Xamarin kommer ind, da Xamarin er kompatibelt med både mono og ReSharper. \\
+
+Vi har valgt at tage brug af Github til vores versionsstyring, hvor vi kan arbejde på projektet og holde styr på hvad der er blevet lavet og hvornår. På denne måde har vi altid en backup af vores tidligere program hvis noget skulle gå galt. Desuden giver dette kunden en måde hvorpå de kan følge med i vores proces. \\
+Projektet findes under dette link: \href{https://github.com/Ambrodji/SU-MMJ}{Github}\\
+Github \checkmark
+
+\section{Diskussion af projektarbejdet}
+
+
+
+\section*{Bilag}
+
+\section{Oversigt over delafleveringer}
+\label{bilag:delafleveringer}
+
+\section{GitHub-oversigt}
+\label{bilag:github}
+
+\section{Reviews}
+\label{bilag:reviews}
+
+\end{document}
+%%  ==================================================================
+%%  End document

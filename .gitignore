@@ -1,0 +1,10 @@
+*.aux
+*.log
+*.out
+*.pdf
+!forside.pdf
+README.md
+
+kufront.sty
+
+forside.synctex.gz
