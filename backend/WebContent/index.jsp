@@ -8,31 +8,59 @@
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<title>OnlineTA</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-	<%@include file="menu.jsp" %>
+	
+	
 	<br/><br/>
-	<div class="container">
-		<div class="row">
-				<div class="col-md-12">
+	<div id="wrapper">
+		<%@include file="navigation.jsp" %>
+				<div id="page-wrapper" class="container-fluid">
 					<h1>Active games:</h1>
 					<table class="table">
 						<thead>
 							<tr>
 								<th>Game</th>
 								<th>TA</th>
-								<th>Uploaded</th>
+								<th>Deadline</th>
 								<th>Completed</th>
+								<th>Progress</th>
+								<th>
+								<div class="btn-toolbar" role="toolbar" aria-label="...">
+									<div class="btn-group" role="group" aria-label="...">
+  										<button type="button" class="btn btn-success"><span style="font-size:1em" class="glyphicon glyphicon-plus"></span></button>
+								  		<button type="button" class="btn btn-danger"><span style="font-size:1em" class="glyphicon glyphicon-minus"></span></button>
+								  		<button type="button" class="btn btn-info"><span style="font-size:1em" class="glyphicon glyphicon-signal"></span></button>
+									</div>
+								</div>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 							<td>Game 1</td>
+							<td>Din mor</td>
+							<td>02.03.2016</td>
+							<td>Aldrig</td>
+							</tr>
+							<tr>
+							<td>Game 1</td>
+							<td>Din mor</td>
+							<td>02.03.2016</td>
+							<td>Aldrig</td>
+							</tr>
+							<tr>
+							<td>Game 1</td>
+							<td>Din mor</td>
+							<td>02.03.2016</td>
+							<td>Aldrig</td>
 							</tr>
 						</tbody>
 					</table>				
 				</div>
-			</div>
+				
+				</div>
 	</div>
 
 </body>
