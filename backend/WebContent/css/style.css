@@ -2,7 +2,7 @@
 /* Global Styles */
 
 body {
-    margin-top: 19.4px;
+    margin-top: 14px;
     background-color: #222;
 }
 
@@ -64,7 +64,7 @@ body {
 
 .side-nav {
         position: fixed;
-        top: 60px;
+        top: 54px;
         left: 225px;
         width: 190px;
         margin-left: -225px;
