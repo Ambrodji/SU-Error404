@@ -10,3 +10,5 @@ kufront.sty
 forside.synctex.gz
 *.exe
 FsGame/OnlineTA_TrueFalseGame.zip
+
+backend/.settings/org.eclipse.wst.common.component
