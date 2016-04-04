@@ -82,7 +82,7 @@ public abstract class Dao<T> {
 	    			" NAME			TEXT	NOT NULL, " + 
 	    			" DESCRIPTION	TEXT, " +
 	    			" FILE_NAME		TEXT	NOT NULL, " +
-	    			" UPLOADED_BY	INT		NOT NULL,  " +
+	    			" UPLOADED_BY	TEXT		NOT NULL,  " +
 	    			" DIFFICULTY_MAX	INT		NOT NULL,  " +
 	    			" DIFFICULTY_MIN	INT		NOT NULL);";
 	    	stmt.executeUpdate(sql);

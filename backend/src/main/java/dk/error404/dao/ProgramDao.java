@@ -28,7 +28,7 @@ public class ProgramDao
         }
         program.setDescription(description);
         program.setFileName(resultSet.getString("file_name"));
-        program.setUploadedBy(resultSet.getInt("uploaded_by"));
+        program.setUploadedBy(resultSet.getString("uploaded_by"));
         program.setDifficultyMin(resultSet.getInt("difficulty_min"));
         program.setDifficultyMax(resultSet.getInt("difficulty_max"));
         return program;
@@ -58,7 +58,7 @@ public class ProgramDao
                     statement.setNull(3, 12);
                 }
                 statement.setString(4, program.getFileName());
-                statement.setInt(5, program.getUploadedBy());
+                statement.setString(5, program.getUploadedBy());
                 statement.setInt(6, program.getDifficultyMin());
                 statement.setInt(7, program.getDifficultyMax());
             }
@@ -88,7 +88,7 @@ public class ProgramDao
                     statement.setNull(2, 12);
                 }
                 statement.setString(3, program.getFileName());
-                statement.setInt(4, program.getUploadedBy());
+                statement.setString(4, program.getUploadedBy());
                 statement.setInt(5, program.getDifficultyMin());
                 statement.setInt(6, program.getDifficultyMax());
                 statement.setObject(7, program.getId());

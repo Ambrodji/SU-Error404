@@ -11,7 +11,7 @@ public class Program
     private String name;
     private String description;
     private String fileName;
-    private int uploadedBy;
+    private String uploadedBy;
     private int difficultyMin;
     private int difficultyMax;
 
@@ -47,11 +47,11 @@ public class Program
         this.fileName = fileName;
     }
 
-    public int getUploadedBy() {
+    public String getUploadedBy() {
         return uploadedBy;
     }
 
-    public void setUploadedBy(int uploadedBy) {
+    public void setUploadedBy(String uploadedBy) {
         this.uploadedBy = uploadedBy;
     }
 
