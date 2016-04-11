@@ -11,10 +11,17 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
+
+	<script>
+	function setURL(url){
+		document.getElementById('mainWindow').src = url;
+	}
 	
-	<% boolean authenticated = true; %>
+	</script>
+	
+	<% boolean authenticated = false; %>
 	<br/><br/>
-	<div id="wrapper" >
+	<div id="wrapper">
 		<% if (authenticated) { %>
 			<%@include file="menu_authenticated.jsp" %>
 		<% }else{ %>

@@ -9,7 +9,13 @@
           </button>
           <a href="#" class="navbar-brand" href="#">Online TA</a>
         </div>
+        
         <!-- Top menu items -->
+        <script>
+		function setURL(url){
+		    document.getElementById('iframe').src = url;
+		}
+		</script>
         <div id="navbar" class="nav navbar-left top-nav">
           <ul class="nav navbar-nav">
             <li><a href="#">Dashboard</a></li>
@@ -25,10 +31,15 @@
 								<input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password">
 								<input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
 								<label class="string optional" for="user_remember_me"> Remember me</label>
-								<input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Sign In">
+								<input style="margin-bottom: 5px;" class="btn btn-primary btn-block" type="button" id="sign-in" value="Sign In" onclick="setURL(google.dk)">
+							</form>
+							<input type="button"><a href="CreateUser.jsp" target="mainWindow"></a>
+							<form target="mainWindow" action="createUser.jsp" method="post">
+								<input class="btn btn-primary btn-block" type="button" value="Create user" onclick="setURL(google.dk)">
 							</form>
 						</div>
 					</li>
+			
           </ul>
         </div><!--/.nav-collapse -->
         <!-- Sidepanel navigation -->
