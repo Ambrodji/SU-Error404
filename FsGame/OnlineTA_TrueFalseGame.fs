@@ -4,17 +4,19 @@ open System
 
 let rnd = System.Random()
 
+/// Return a random bool from minNum to maxNum
 let foo minNum maxNum = 
     let first = rnd.Next(minNum, maxNum)
     first
 
+/// Return a random bool value
 let booly () =
   let first = rnd.Next(0, 2)
   let mutable boolVal = true 
   if first = 0 then boolVal <- true else boolVal <- false
-  boolVal  
+  boolVal
 
-///Generates a lemma
+///Generates a lemma and calculates answer
 let getQuestion (x) = 
   match x with 
   |1 -> let array1 = [| (foo 1 100); (foo 1 100) |]
@@ -27,29 +29,33 @@ let getQuestion (x) =
           + " then " + string(array2.[0]) + " else " + string(array2.[1]) 
           + "\", \"answer\": \"" + string(answerCheck) + "\" }")
 
-  |2 -> let myArray = Array.init 10 (fun x -> foo 1 10)
+  |2 -> let array1 = Array.init 10 (fun x -> foo 1 10)
         let array2 = [| (booly ()); (booly ()) |]
 
+        /// Checks if answer is correct
         let answerCheck =
           let mutable count = 0
-          for i in 0..(myArray.Length-1) do
-            if (myArray.[i] % (myArray.[0])) = 0 then
-              count <- count + myArray.[i]
+          for i in 0..(array1.Length-1) do
+            if (array1.[i] % (array1.[0])) = 0 then
+              count <- count + array1.[i]
               Console.WriteLine(count)
-          if count < (myArray.[1] + myArray.[2]) then array2.[0] else array2.[1]
+          if count < (array1.[1] + array1.[2]) then array2.[0] else array2.[1]
 
-        Console.WriteLine("{ \"question\": \"let myArray = [|" + string(myArray.[0]) + ";"
-                 + string(myArray.[1]) + ";" + string(myArray.[2]) + ";"
-                 + string(myArray.[3]) + ";" + string(myArray.[4]) + ";"
-                 + string(myArray.[5]) + ";" + string(myArray.[6]) + ";"
-                 + string(myArray.[7]) + ";" + string(myArray.[8]) + ";"
-                 + string(myArray.[9]) + "|]\nlet mutable count = 0\n\n
-                 for i in 1..(myArray.Length-1) do\n  if (string(myArray.[i]) %" 
-                 + string(myArray.[0]) + ") = 0 then\n    count <- count + myArray.[i] \n  if count < ("
-                 + string(myArray.[1]) + " + " 
-                 + string(myArray.[2]) + ") then " + string(array2.[0]) + " else " 
-                 + string(array2.[1]) + ",\" \"answer\": \"" + string(answerCheck) + "\" })")
-//  |3 -> Console.WriteLine("3")
+        /// Writes string for user to read
+        let mutable arrString = ""
+        for i in 0..(array1.Length-2) do
+          arrString <- arrString + (string(array1.[i]) + ";")
+
+        Console.WriteLine("{ \"question\": \"let array1 = [|" + arrString + string(array1.[9]) + "|]\nlet mutable count = 0\n\n" 
+                 + "for i in 1..(array1.Length-1) do\n  if array1.[i] % " 
+                 + string(array1.[0]) + " = 0 then\n    count <- count + array1.[i] \n  if count < ("
+                 + string(array1.[1]) + " + " 
+                 + string(array1.[2]) + ") then " + string(array2.[0]) + " else " 
+                 + string(array2.[1]) + "\", \"answer\": \"" + string(answerCheck) + "\" }")
+
+  |3 -> 
+
+
   |4 -> Console.WriteLine("4")
   |5 -> Console.WriteLine("5")
   |_ -> ()
