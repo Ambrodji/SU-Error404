@@ -13,7 +13,7 @@ import dk.error404.model.User;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -24,6 +24,7 @@ public class LoginServlet extends HttpServlet {
 
 	/* Authenticates and redirects users */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Login servlet: authenticating user");
 		String userID = request.getParameter("user");
 		String password = request.getParameter("password");
 		

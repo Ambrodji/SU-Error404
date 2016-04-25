@@ -12,7 +12,13 @@
 </head>
 <body>
 	
-	<% boolean authenticated = true; %>
+	<% 
+	boolean authenticated = false;
+	String user = (String) request.getSession().getAttribute("user");
+	if (user != null) {
+		authenticated = true;
+	}
+	%>
 	<br/><br/>
 	<div id="wrapper" >
 		<% if (authenticated) { %>

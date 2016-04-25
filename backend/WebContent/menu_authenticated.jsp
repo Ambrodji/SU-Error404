@@ -19,16 +19,16 @@
         <div id="navbarR" class="nav navbar-right top-nav">
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-						<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="margin-right:10px"><span class="glyphicon glyphicon-user"></span> $User <strong class="caret"></strong></a>
+						<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="margin-right:10px"><span class="glyphicon glyphicon-user"></span> <%=request.getSession().getAttribute("user") %> <strong class="caret"></strong></a>
 						<ul class="dropdown-menu" style="padding: 15px; padding-bottom: 10px; margin-right:10px">
 							<li style="padding-bottom:2px">
-								<a href="#"><span style="font-size:1em" class="glyphicon glyphicon-user"></span> $user</a>
+								<a href="#"><span style="font-size:1em" class="glyphicon glyphicon-user"></span> <%=request.getSession().getAttribute("user") %></a>
 							</li>
 							<li style="padding-bottom:2px">
 								<a href="#"><span style="font-size:1em" class="glyphicon glyphicon-cog"></span> Settings</a>
 							</li>
 							<li >
-								<a href="#"><span style="font-size:1em" class="glyphicon glyphicon-log-out"></span> Logout</a>
+								<a href="logout"><span style="font-size:1em" class="glyphicon glyphicon-log-out"></span> Logout</a>
 							</li>
 						</ul>
 					</li>
