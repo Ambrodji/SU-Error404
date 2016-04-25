@@ -9,15 +9,17 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<title>OnlineTA</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="text/javascript">
+			jQuery(function(){
+				jQuery('#loadPage').click(function(){
+					jQuery('#page-wrapper').load('dashboard.jsp');
+				});
+			})
+		</script>
 </head>
 <body>
 
-	<script>
-	function setURL(url){
-		document.getElementById('mainWindow').src = url;
-	}
-	</script>
-	
 	<% boolean authenticated = false; %>
 	<br/><br/>
 	<div id="wrapper">
@@ -26,8 +28,10 @@
 		<% }else{ %>
 			<%@include file="menu_unauthenticated.jsp" %>
 		<% } %>
+	
+		<div id="page-wrapper" class="container-fluid">
 		
-		<iframe class="embed-responsive-item" name="mainWindow" src="dashboard.jsp" frameborder="0" scrolling="no"></iframe>
+		</div>
 				
 	</div>
 

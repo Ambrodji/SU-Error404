@@ -11,10 +11,9 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-
-<%@include file="newGameUpload.jsp" %>
-
-					<h1>Active games:</h1>
+<%@include file="createUserNew.jsp" %>
+<div id="page-wrapper" class="container-fluid">
+					<h1>CreateUser</h1>
 					<table class="table">
 						<thead>
 							<tr>
@@ -26,7 +25,7 @@
 								<th>
 								<div class="btn-toolbar">
 									<div class="btn-group">
-  										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#uploadGame"><span style="font-size:1em" class="glyphicon glyphicon-plus"></span></button>
+  										<button type="button" class="btn btn-success"><span style="font-size:1em" class="glyphicon glyphicon-plus"></span></button>
 								  		<button type="button" class="btn btn-danger"><span style="font-size:1em" class="glyphicon glyphicon-minus"></span></button>
 								  		<button type="button" class="btn btn-info"><span style="font-size:1em" class="glyphicon glyphicon-signal"></span></button>
 									</div>
@@ -55,5 +54,6 @@
 							</tr>
 						</tbody>
 					</table>				
+				</div>
 </body>
 </html>
