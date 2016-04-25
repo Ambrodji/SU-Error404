@@ -12,7 +12,7 @@
         <!-- Top menu items -->
         <div id="navbar" class="nav navbar-left top-nav">
           <ul class="nav navbar-nav">
-          	<li><button type="button" class="button-tabs" target="mainWindow">Dashboard<span class="select-active"></span></button></li>
+          	<li><button type="button" class="button-tabs" id="loadPage">Dashboard</button>
           	<li><button type="button" class="button-tabs" src="http://www.google.com" target="mainWindow">History<span class="select-active"></span></button></li>
           </ul>
         </div>
