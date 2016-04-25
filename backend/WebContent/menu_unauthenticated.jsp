@@ -33,9 +33,9 @@
 								<label class="string optional" for="user_remember_me"> Remember me</label>
 								<input style="margin-bottom: 5px;" class="btn btn-primary btn-block" type="button" id="sign-in" value="Sign In" onclick="setURL(google.dk)">
 							</form>
-							<input type="button"><a href="CreateUser.jsp" target="mainWindow"></a>
+							<input type="button" action="CreateUser.jsp" target="mainWindow">
 							<form target="mainWindow" action="createUser.jsp" method="post">
-								<input class="btn btn-primary btn-block" type="button" value="Create user" onclick="setURL(google.dk)">
+								<input class="btn btn-primary btn-block" type="button" value="Create user" onclick=setURL(www.google.dk)>
 							</form>
 						</div>
 					</li>

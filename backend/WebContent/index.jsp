@@ -16,7 +16,6 @@
 	function setURL(url){
 		document.getElementById('mainWindow').src = url;
 	}
-	
 	</script>
 	
 	<% boolean authenticated = false; %>
