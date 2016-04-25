@@ -11,11 +11,11 @@
         </div>
         
         <!-- Top menu items -->
-        
+
 		
         <div id="navbar" class="nav navbar-left top-nav">
           <ul class="nav navbar-nav">
-            <li><a href="#">Dashboard</a></li>
+            <li><button type="button" class="button-tabs" id="loadPage">Dashboard</button></li>
           </ul>
         </div>
         <div id="navbarR" class="nav navbar-right top-nav">
@@ -34,7 +34,7 @@
 								<input class="btn btn-primary btn-block" type="button" value="Create user">
 							</form>
 						</div>
-					</li>
+			</li>
 			
           </ul>
         </div><!--/.nav-collapse -->

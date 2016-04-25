@@ -25,6 +25,7 @@ body {
     height: 100%;
 }
 
+
 /* button class */
 
 .button-tabs{
@@ -48,19 +49,6 @@ body {
     background-color: #000 !important;
     color:#fdfcff;
 }
-
-/* IFrame settings */
-
-iframe {
-	background-color: #ffffff !important;
-	height:640px;
-	width:100%;
-	margin-right: 20px;
-	border: none;
-	overflow-x: hidden;
-	overflow-y: auto;
-}
-
 
 
 /* Top Navigation */
@@ -96,8 +84,8 @@ iframe {
 .top-nav>.open>a,
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
-    color: #fff;
-    background-color: #000;
+    outline: none;
+    background-color: #000 !important;
 }
 
 /* Side Navigation */

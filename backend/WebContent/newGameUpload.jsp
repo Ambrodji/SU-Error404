@@ -1,4 +1,4 @@
-<div class="modal fade" id="uploadGame" tabindex="-1" role="dialog" 
+<div class="modal fade" id="uploadGame" tabindex="-1" role="dialog"  
      aria-labelledby="uploadGameLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
