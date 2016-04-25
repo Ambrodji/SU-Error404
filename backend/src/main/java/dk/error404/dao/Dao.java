@@ -1,5 +1,6 @@
 package dk.error404.dao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,16 +9,45 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import dk.error404.model.User;
+
 public abstract class Dao<T> {
 	private final String DATABASE_NAME = "error404database.db";
+	private static boolean initialized = false;
 	
 	public Dao() {
 		// Initialize tables in DB in case they don't exist already
-		initializeTabels();
+		if (!initialized) {
+			System.out.println("Initializing DB...");
+			initializeTabels();
+			initialized = true;
+			insertTestUser();
+		}
+	}
+	
+	private boolean databaseExists()
+	{
+		File dbFile = new File(DATABASE_NAME);
+	    return dbFile.exists();
+		/*Connection c = null;
+	    Statement stmt = null;
+	    try {
+	    	Class.forName("org.sqlite.JDBC");
+	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+
+	    	stmt = c.createStatement();
+	    	String sql = "SELECT COUNT(*) FROM USER;";
+	    	stmt.executeQuery(sql);
+	    	ResultSet results = stmt.getResultSet();
+	    	results.ne
+	    	stmt.close();
+	    	c.close();
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    }*/
 	}
 	
 	private void initializeTabels() {
-		System.out.println("Initializing DB...");
 		initializeUserTable();
 		initializeUserTypeTable();
 		initializeTeamTable();
@@ -158,6 +188,18 @@ public abstract class Dao<T> {
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    }
+	}
+	
+	private void insertTestUser() {
+		UserDao dao = new UserDao();
+		if (dao.findById("test") == null) {
+			User user = new User();
+	    	user.setName("testperson");
+	    	user.setId("test");
+	    	user.setPassword("test");
+	    	
+	    	dao.insert(user);
+		}
 	}
 	
 	private void initializeUserTypeTable() {
