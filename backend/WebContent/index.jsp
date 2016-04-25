@@ -9,25 +9,36 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<title>OnlineTA</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script type="text/javascript">
+			jQuery(function(){
+				jQuery('#loadPage').click(function(){
+					jQuery('#page-wrapper').load('dashboard.jsp');
+				});
+			})
+		</script>
 </head>
 <body>
-	
-	<% 
-	boolean authenticated = false;
-	String user = (String) request.getSession().getAttribute("user");
-	if (user != null) {
-		authenticated = true;
-	}
-	%>
+
+	<% boolean authenticated = false; %>
 	<br/><br/>
-	<div id="wrapper" >
+	<div id="wrapper">
 		<% if (authenticated) { %>
 			<%@include file="menu_authenticated.jsp" %>
 		<% }else{ %>
 			<%@include file="menu_unauthenticated.jsp" %>
 		<% } %>
-		
-		<iframe class="embed-responsive-item" name="mainWindow" src="dashboard.jsp" frameborder="0" scrolling="no"></iframe>
+	
+		<div id="page-wrapper" class="container-fluid">
+		  <h4>jabba</h4>
+		  <h4>jabba</h4>
+		  <h4>jabba</h4>
+		  <h4>jabba</h4>
+		  <h4>jabba</h4>
+		  <h4>jabba</h4>
+		  <h4>jabba</h4>
+		  <h4>jabba</h4> 
+		</div>
 				
 	</div>
 
