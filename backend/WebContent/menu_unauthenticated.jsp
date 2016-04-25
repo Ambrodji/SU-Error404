@@ -12,18 +12,6 @@
         
         <!-- Top menu items -->
         
-        <script>
-        function loadDoc() {
-        	var xhttp = new XMLHttpRequest();
-        	xhttp.onreadystatechange = function() {
-        	  if (xhttp.readyState == 4 && xhttp.status == 200) {
-        	  	document.getElementById("page-wrapper").innerHTML = xhttp.responseText;
-        	  }
-        	};
-       	 xhttp.open("GET", "ajax_info.txt", true);
-         xhttp.send();
-        }
-		</script>
 		
         <div id="navbar" class="nav navbar-left top-nav">
           <ul class="nav navbar-nav">
