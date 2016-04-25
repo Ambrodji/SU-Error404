@@ -19,8 +19,13 @@
 		</script>
 </head>
 <body>
-
-	<% boolean authenticated = false; %>
+	<%
+	boolean authenticated = false;
+	String user = (String) request.getSession().getAttribute("user");
+	if (user != null) {
+		authenticated = true;
+	}
+	%>
 	<br/><br/>
 	<div id="wrapper">
 		<% if (authenticated) { %>
