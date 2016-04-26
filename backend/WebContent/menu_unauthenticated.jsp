@@ -11,11 +11,11 @@
         </div>
         
         <!-- Top menu items -->
-
+		<%@include file="createUserNew.jsp" %>
 		
         <div id="navbar" class="nav navbar-left top-nav">
           <ul class="nav navbar-nav">
-            <li><button type="button" class="button-tabs" id="loadPage">Dashboard</button></li>
+            <li><button type="button" class="button-tabs" id="loadDash">Dashboard</button></li>
           </ul>
         </div>
         <div id="navbarR" class="nav navbar-right top-nav">
@@ -29,13 +29,10 @@
 								<input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
 								<label class="string optional" for="user_remember_me"> Remember me</label>
 								<input style="margin-bottom: 5px;" class="btn btn-primary btn-block" type="submit" id="sign-in" value="Sign In" name="user">
-							</form>
-							<form id="loadPage" method="post" >
-								<input class="btn btn-primary btn-block" type="button" value="Create user">
-							</form>
+								<input style="margin-bottom: 5px;" class="btn btn-primary btn-block" type="button" id="createUserBtn" value="Create user" data-toggle="modal" data-target="#createUser">
+							</form>							
 						</div>
 			</li>
-			
           </ul>
         </div><!--/.nav-collapse -->
         <!-- Sidepanel navigation -->

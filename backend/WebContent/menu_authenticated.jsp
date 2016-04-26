@@ -12,8 +12,8 @@
         <!-- Top menu items -->
         <div id="navbar" class="nav navbar-left top-nav">
           <ul class="nav navbar-nav">
-          	<li><button type="button" class="button-tabs" id="loadPage">Dashboard</button>
-          	<li><button type="button" class="button-tabs" src="http://www.google.com" target="mainWindow">History<span class="select-active"></span></button></li>
+          	<li><button type="button" class="button-tabs" id="loadDash">Dashboard</button></li>
+          	<li><button type="button" class="button-tabs" id="loadHist">History</button></li>
           </ul>
         </div>
         <div id="navbarR" class="nav navbar-right top-nav">

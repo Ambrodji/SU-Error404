@@ -134,7 +134,7 @@ body {
 /* Pop-up boks */
 .modal-body .form-horizontal .col-sm-2,
 .modal-body .form-horizontal .col-sm-10 {
-    width: 100%
+    width: 100%;
 }
 
 .modal-body .form-horizontal .control-label {
@@ -142,4 +142,8 @@ body {
 }
 .modal-body .form-horizontal .col-sm-offset-2 {
     margin-left: 15px;
+}
+
+#createUser {
+	z-index: 20;
 }

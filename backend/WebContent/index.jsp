@@ -4,19 +4,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<title>OnlineTA</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script type="text/javascript">
-			jQuery(function(){
-				jQuery('#loadPage').click(function(){
-					jQuery('#page-wrapper').load('dashboard.jsp');
-				});
-			})
-		</script>
+	<%@include file ="navigation.jsp" %>
 </head>
 <body>
 	<%

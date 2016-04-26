@@ -1,5 +1,5 @@
 <div class="modal fade" id="createUser" tabindex="-1" role="dialog" 
-		     aria-labelledby="createUserLabel" aria-hidden="true">
+		     aria-labelledby="createUserLabel" aria-hidden="true" style="z-index:100;">
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <!-- Modal Header -->
