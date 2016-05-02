@@ -30,14 +30,7 @@
 		<% } %>
 	
 		<div id="page-wrapper" class="container-fluid">
-		  <h4>jabba</h4>
-		  <h4>jabba</h4>
-		  <h4>jabba</h4>
-		  <h4>jabba</h4>
-		  <h4>jabba</h4>
-		  <h4>jabba</h4>
-		  <h4>jabba</h4>
-		  <h4>jabba</h4> 
+		 <%@include file ="dashboard.jsp" %>
 		</div>
 				
 	</div>
