@@ -49,8 +49,8 @@ public class RegisterServlet extends HttpServlet {
 		
 		if (userName == null || password == null || userID == null || email == null || school == null ||
 			"".equals(userName.trim()) || "".equals((userID).trim()) || "".equals(password.trim())) {
-			System.out.println("RegisterServlet: Returning error 500 because of missing fields");
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			System.out.println("RegisterServlet: Returning error because of missing fields");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		

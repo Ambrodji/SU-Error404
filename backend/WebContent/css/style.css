@@ -154,3 +154,8 @@ body {
 .valid {
 	color: green;
 }
+
+.table-hover tbody tr:hover td
+{
+    background-color: LightGreen;
+}

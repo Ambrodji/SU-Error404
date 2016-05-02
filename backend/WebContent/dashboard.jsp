@@ -1,10 +1,11 @@
 <%@include file="newGameUpload.jsp" %>
+<%@include file="navigation.jsp" %>
 <%@page import="dk.error404.dao.ProgramDao" %>
 <%@page import="dk.error404.model.Program" %>
 <%@page import="java.util.ArrayList" %>
 
 					<h1>Active games:</h1>
-					<table class="table">
+					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
 								<th>Game</th>
@@ -29,7 +30,7 @@
 						<% ProgramDao dao = new ProgramDao(); 
 						ArrayList<Program> programs = dao.findAll();
 						for (Program p : programs) {%>
-							<tr>
+							<tr class="gameRow" data-href='<%="?game=" + p.getId() %>' >
 							<td><%=p.getName() %></td>
 							<td><%=p.getDescription() %></td>
 							<td><%=p.getUploadedBy() %></td>
