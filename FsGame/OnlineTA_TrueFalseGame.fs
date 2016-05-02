@@ -27,7 +27,7 @@ let getQuestion (x) =
         Console.WriteLine("{ \"question\": \"if " 
           + string(array1.[0]) + " < " + string(array1.[1]) 
           + " then " + string(array2.[0]) + " else " + string(array2.[1]) 
-          + "\", \"answer\": \"" + string(answerCheck) + "\" }")
+          + "\", \"answer\": \"" + string(answerCheck) + "\", \"choices\": [\"True\", \"False\"] }")
 
   |2 -> let array1 = Array.init 10 (fun x -> foo 1 10)
         let array2 = [| (booly ()); (booly ()) |]
