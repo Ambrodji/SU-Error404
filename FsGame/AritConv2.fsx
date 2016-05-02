@@ -30,6 +30,7 @@ type Difficulty (Diff:int) = class
     StringCollector <- StringCollector + x.Pseudo()
     StringCollector
 end
+
 /// Random indicator for whether or not parentesis should be used, different pattern matching if true, and if not -----------------------------------------------------------
 let calcHandler x =
 
@@ -38,20 +39,22 @@ let calcHandler x =
     match x with
       | x when ((x >= 1) && (x <= 5)) -> o.AritString x
       | _ -> failwith "Index out of bounds"
-      
-  printfn "\n %s \n \n" outString
-  printfn "%A" outString
-  printfn "%A" outString
-  outString <- "( " + outString + " ) "
-  outString.Split [|' '|]
-
+  
+  System.Console.WriteLine("{ \"question\": \"" + outString + "\" }")
+  outString
+  //printfn "\n %s \n \n" outString
+  //printfn "%A" outString
+  //printfn "%A" outString
 
 //////////////////////
 
 //let ArrayList = stringInput.Split [|' '|] 
 
 let mega(list) =
-  let mutable Collector = list
+  let outString = "( " + list + " )"
+  let list2 = outString.Split [|' '|]
+
+  let mutable Collector = list2
   let mutable i = 0
   let mutable firstIn = 0
   let mutable lastIn = 0
@@ -62,11 +65,11 @@ let mega(list) =
   let mutable fI = 0
   let mutable Clicker = [||]
   
-  while i < (Array.length list) do
-    printfn "%A" i
-    printfn "%A" (Array.length list)
-    printfn "%A" (Array.length Collector)
-    printfn "Coll : %A" Collector
+  while i < (Array.length Collector) do
+    //printfn "%A" i
+    //printfn "%A" (Array.length list)
+    //printfn "%A" (Array.length Collector)
+    //printfn "Coll : %A" Collector
 
 
     if Collector.[i] = "(" then
@@ -103,17 +106,17 @@ let mega(list) =
         index <- index + 1
 
       StartColl <- Collector.[0..firstIn]
-      printfn "%A" StartColl
+      //printfn "%A" StartColl
       EndColl <- Collector.[firstIn+1..(Collector.Length-1)]
-      printfn "%A" EndColl
-      printfn "temp %A" tmp
+      //printfn "%A" EndColl
+      //printfn "temp %A" tmp
       Collector <- Array.append StartColl [|tmp|]
-      printfn "Beta: %A" Collector
+      //printfn "Beta: %A" Collector
       Collector <- Array.append Collector EndColl
       Collector <- Collector |> Array.filter ((<>)"")
-      printfn "Prime: %A" Collector
-      printfn "First Index : %A" firstIn
-      printfn "Last Index : %A" lastIn
+      //printfn "Prime: %A" Collector
+      //printfn "First Index : %A" firstIn
+      //printfn "Last Index : %A" lastIn
 
       
       firstIn <- 0
@@ -127,7 +130,7 @@ let mega(list) =
     //Count and print
     i <- i + 1
 
-  printfn "%A" tmp
+  //printfn "%A" tmp
   i <- 0
   
   while i < (Array.length Collector) do
@@ -172,8 +175,8 @@ let mega(list) =
       lI <- 0
     i <- i + 1
   
-  printfn "end"
-  printfn "%s" (System.String.Join(" ", Collector))
+  //printfn "end"
+  //printfn "%s" (System.String.Join(" ", Collector))
   //printfn "%A %A" StartColl EndColl
   let final = Collector
               |> Array.filter ((<>)"rm")
@@ -181,7 +184,7 @@ let mega(list) =
               |> Array.filter ((<>)"")
 
   let endRes = System.String.Join(" ", final)
-  printfn "%s" endRes
+
   endRes
 //return megalist and filter rm (remove) from it
 
@@ -200,22 +203,26 @@ let mega(list) =
 
 ////////////////////
 
-let getQuestion (x) = mega(calcHandler x)
+let getQuestion (x) = (calcHandler x)
 
 
 let evalAnswer (question, answer) = 
-  System.Console.Write((question:string) + " : " + (answer:string))
+  if mega(question) = answer then
+    System.Console.WriteLine(true)
+  else
+    System.Console.WriteLine(false)
   
+//Takes command line arguments and calls given function
 [<EntryPoint>]
 let main(args) =
   if args.Length < 1 then
-    System.Console.Write("You need to give a function as an argument: getQuestion() or evalAnswer(question,answer)")
+    System.Console.Write("You need to give a function as an argument: getQuestion(x) or evalAnswer(question,answer)")
     -1
   else
     let funcType = args.[0]
-    if funcType = "getQuestion" then
+    if funcType = "getQuestion" then 
       let input1 = args.[1]
-      getQuestion (int(input1))
+      getQuestion(int(input1))
       ()
     elif funcType = "evalAnswer" then
       if args.Length <> 3 then
