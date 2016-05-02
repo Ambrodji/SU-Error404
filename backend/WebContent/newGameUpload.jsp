@@ -15,9 +15,9 @@
             </div>
             
             <!-- Modal Body -->
-            <div class="modal-body">
+            <div class="modal-body" >
                 
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" role="form" method="POST" action="UploadServlet">
                   <div class="form-group">
                     <label  class="col-sm-2 control-label"
                               for="inputTitle">Title</label>
@@ -62,18 +62,19 @@
                     	<textarea class="form-control" id="inputDescription" placeholder="Description"></textarea>
                     </div>
                   </div>
-                </form>           
-            </div>
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
+                  <!-- Modal Footer -->
+            	  <div class="modal-footer">
+                	<button type="button" class="btn btn-default"
                         data-dismiss="modal">
                             Close
-                </button>
-                <button type="button" class="btn btn-primary">
+                	</button>
+                	<button type="button" class="btn btn-primary">
                     Save changes
-                </button>
+                	</button>
+            	  </div>
+                </form>           
             </div>
+
         </div>
     </div>
 </div>

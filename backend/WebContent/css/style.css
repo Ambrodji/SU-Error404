@@ -147,3 +147,10 @@ body {
 #createUser {
 	z-index: 20;
 }
+
+.error {
+	color: red;
+}
+.valid {
+	color: green;
+}

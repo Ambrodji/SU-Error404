@@ -47,7 +47,8 @@ public class RegisterServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String school = request.getParameter("school");
 		
-		if (userName == null || password == null || userID == null || email == null || school == null) {
+		if (userName == null || password == null || userID == null || email == null || school == null ||
+			"".equals(userName.trim()) || "".equals((userID).trim()) || "".equals(password.trim())) {
 			System.out.println("RegisterServlet: Returning error 500 because of missing fields");
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return;
@@ -71,7 +72,11 @@ public class RegisterServlet extends HttpServlet {
 		user.setUserType(1); // hardcoded admin rights. TODO: FIX THIS!!!
 		
 		dao.insert(user);
+		response.getWriter().println("success");
 		System.out.println("RegisterServlet: Created user with id=" + userID);
+		
+		request.getSession().setAttribute("user", user.getId());
+		response.sendRedirect(request.getContextPath() + "/");
 		
 		response.setStatus(HttpServletResponse.SC_CREATED);
 	}

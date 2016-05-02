@@ -17,13 +17,13 @@
 		            <!-- Modal Body -->
 		            <div class="modal-body">
 		                
-		                <form class="form-horizontal" role="form">
+		                <form class="form-horizontal" id="registerForm" role="form">
 		                  <div class="form-group">
 		                    <label  class="col-sm-2 control-label"
 		                              for="inputName">Full name</label>
 		                    <div class="col-sm-10">
 		                        <input type="text" class="form-control" 
-		                        id="inputName" placeholder="Enter your full name"/>
+		                        id="user" name="user" placeholder="Enter your full name"/>
 		                    </div>
 		                  </div>
 		                  <div class="form-group">
@@ -31,46 +31,102 @@
 		                          for="inputID" >KU-ID</label>
 		                    <div class="col-sm-10">
 		                        <input type="text" class="form-control"
-		                            id="inputID" placeholder="Etc. atv420"/>
+		                            id="id" name="id" placeholder="Etc. atv420"/>
 		                    </div>
 		                  </div>
 		                  <div class="form-group">
 		                    <label class="col-sm-2 control-label"
-		                          for="inputEmail" >Email</label>
+		                          for="email" >Email</label>
 		                    <div class="col-sm-10">
 		                        <input type="email" class="form-control"
-		                            id="inputEmail" placeholder="Etc. anders@hotmail.com"/>
+		                            id="email" name="email" placeholder="Etc. anders@hotmail.com"/>
 		                    </div>
 		                  </div>
 		                  <div class="form-group">
 		                    <label class="col-sm-2 control-label"
-		                          for="inputSchool" >Skole</label>
+		                          for="school" >Skole</label>
 		                    <div class="col-sm-10">
 		                        <input type="text" class="form-control"
-		                            id="inputSchool" placeholder="Etc. Københavns Universitet"/>
+		                            id="school" name="school" placeholder="Etc. Københavns Universitet"/>
 		                    </div>
 		                  </div>
 		                  <div class="form-group">
 		                    <label class="col-sm-2 control-label"
-		                          for="inputPassword" >Password</label>
+		                          for="password" >Password</label>
 		                    <div class="col-sm-10">
-		                        <input type="password" class="form-control"
-		                            id="inputPassword"/>
+		                        <input type="password" name="password" class="form-control"
+		                            id="password"/>
 		                    </div>
 		                  </div>
-		                  
-		                </form>           
-		            </div>
-		            <!-- Modal Footer -->
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-default"
+		                  <!-- Modal Footer -->
+		            	  <div class="modal-footer">
+		                	<button type="button" class="btn btn-default"
 		                        data-dismiss="modal">
 		                            Close
-		                </button>
-		                <button type="button" class="btn btn-primary">
+		                	</button>
+		                	<button type="submit" class="btn btn-primary">
 		                    Create user
-		                </button>
+		                	</button>
+		               	  </div>
+		            	</form>           
 		            </div>
+		            <script>
+		            
+		            $(document).ready(function(){
+		            	$("form").submit(function(event) {
+		            	    event.preventDefault()
+
+		            	    if ($("form").valid()) {
+		            	    	$.ajax({
+		                            url: "RegisterServlet",
+		                            type: 'post',
+		                            dataType: 'text',
+		                            data: $("#registerForm").serialize(),
+		                            success: function(data) {
+		                                alert("Your new account has been created");
+		                                location.reload(true);
+		                            },
+		                            error: function(data) {
+		                            	alert("User could not be created");
+		                            }
+		                    });
+		            	    }
+		            	});
+
+		            	jQuery.validator.addMethod("licensePlate", function(value, element, param) {
+		            	    var regex = new RegExp(param)
+		            	    return Boolean(regex.test(value));
+		            	}, "Please enter a valid ku id (3 letters and 3 numbers)");
+
+		            	jQuery.validator.addMethod("minLength", function(value, element, param) {
+		            	    return Boolean(value == "" || value.length >= param)
+		            	}, "The password must be at least {0} characters long");
+		            	$("form").validate({
+		            	    rules: {
+		            	        user: {
+		            	        	required: true,
+		            	        },
+		            	        id: {
+		            	        	required: true,
+		            	            licensePlate: '^[a-z]{3}[0-9]{3}$',
+		            	        },
+		            	        email: {
+		            	        	required: true,
+		            	        },
+		            	        school: {
+		            	        	required: true,
+		            	        },
+		            	        password: {
+		            	        	required: true,
+		            	        	minLength: 6,
+		            	        }
+		            	    },
+		            	    messages: {}
+		            	});
+		            });
+		            
+		            </script>
+		            
 		        </div>
 		    </div>
 		</div>
