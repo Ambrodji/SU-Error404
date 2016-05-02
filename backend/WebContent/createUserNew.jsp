@@ -73,7 +73,7 @@
 		            <script>
 		            
 		            $(document).ready(function(){
-		            	$("form").submit(function(event) {
+		            	$("form#registerForm").submit(function(event) {
 		            	    event.preventDefault()
 
 		            	    if ($("form").valid()) {

@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import dk.error404.model.Program;
  * Servlet implementation class ProgramUploadServlet
  */
 @WebServlet("/UploadProg")
+@MultipartConfig
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -51,25 +53,28 @@ public class UploadServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final String path = "/onlineTAprograms/";
+		final String path = "."; //"/onlineTAprograms/";
 		
-		String fileName = request.getParameter("fileName");
+		
 		Part filePart = request.getPart("file");
+		String fileName = getSubmittedFileName(filePart);
 		String name = request.getParameter("name");
 		String uploadedBy = (String) request.getSession().getAttribute("user");
 		String description = request.getParameter("description");
-		String difficultyMinStr = request.getParameter("difficultyMin");
-		String difficultyMaxStr = request.getParameter("difficultyMax");
+		String difficultyMinStr = "1"; //request.getParameter("difficultyMin");
+		String difficultyMaxStr = "2"; //request.getParameter("difficultyMax");
 		int difficultyMin = -1;
 		int difficultyMax = -1;
 		
 		// User not logged in
 		if (uploadedBy == null) {
+			System.out.println("UploadServlet: No user logged in, sending error");
 			response.sendError(HttpServletResponse.SC_FORBIDDEN);
 			return;
 		}
 		
-		if (fileName == null || name == null || description == null || difficultyMinStr == null || difficultyMaxStr == null) {
+		if (name == null || description == null || difficultyMinStr == null || difficultyMaxStr == null) {
+			System.out.println("UploadServlet: Missing fields, sending error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -78,13 +83,13 @@ public class UploadServlet extends HttpServlet {
 			difficultyMin = Integer.parseInt(difficultyMinStr);
 			difficultyMax = Integer.parseInt(difficultyMaxStr);
 		} catch (NumberFormatException e) {
+			System.out.println("UploadServlet: Failed to parse difficulty, sending error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		
 		OutputStream out = null;
 		InputStream filecontent = null;
-	    final PrintWriter writer = response.getWriter();
 	    
 	    boolean error = false;
 	    try {
@@ -109,9 +114,6 @@ public class UploadServlet extends HttpServlet {
 	        if (filecontent != null) {
 	            filecontent.close();
 	        }
-	        if (writer != null) {
-	            writer.close();
-	        }
 	    }
 	    if (!error) {
 	    	ProgramDao dao = new ProgramDao();
@@ -126,10 +128,23 @@ public class UploadServlet extends HttpServlet {
 	    	
 	    	dao.insert(prog);
 	    	System.out.println("UploadServlet: Inserted program with name=" + name);
+	    	response.sendRedirect(request.getContextPath() + "/");
+	    	return;
 	    } else {
 	    	response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+	    	return; 
 	    }
 		
+	}
+	
+	private static String getSubmittedFileName(Part part) {
+	    for (String cd : part.getHeader("content-disposition").split(";")) {
+	        if (cd.trim().startsWith("filename")) {
+	            String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+	            return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix.
+	        }
+	    }
+	    return null;
 	}
 
 }

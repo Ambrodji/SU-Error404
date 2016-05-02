@@ -17,27 +17,19 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                <form class="form-horizontal" role="form" method="POST" action="UploadServlet">
+                <form id="gameUploadForm" enctype="multipart/form-data" class="form-horizontal" role="form" method="POST" action="UploadProg">
                   <div class="form-group">
                     <label  class="col-sm-2 control-label"
                               for="inputTitle">Title</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" 
-                        id="inputTitle" placeholder="Title of game"/>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label"
-                          for="inputAT" >AT</label>
-                    <div class="col-sm-10">
-                        <input type="datetime" class="form-control"
-                            id="inputAT" placeholder="Uploaded by"/>
+                        id="inputTitle" name="name" placeholder="Title of game"/>
                     </div>
                   </div>
                   <div class="form-group">
                   	<label class="col-sm-2 control-label" for="inputGame" >Upload Game</label>
                   	<div class="col-sm-offset-2 col-sm-10">
-                  		<input type="file" name="inputGame"/>
+                  		<input type="file" name="file"/>
                   	</div>
                   </div>
                   <div class="form-group">
@@ -59,7 +51,7 @@
                     <label class="col-sm-2 control-label"
                           for="inputDescription" >Description</label>
                     <div class="col-sm-10">
-                    	<textarea class="form-control" id="inputDescription" placeholder="Description"></textarea>
+                    	<textarea class="form-control" id="inputDescription" name="description" placeholder="Description"></textarea>
                     </div>
                   </div>
                   <!-- Modal Footer -->
@@ -68,8 +60,8 @@
                         data-dismiss="modal">
                             Close
                 	</button>
-                	<button type="button" class="btn btn-primary">
-                    Save changes
+                	<button type="submit" class="btn btn-primary">
+                    Upload
                 	</button>
             	  </div>
                 </form>           

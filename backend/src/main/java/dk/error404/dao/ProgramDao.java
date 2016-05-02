@@ -50,7 +50,6 @@ public class ProgramDao
             public void setParameters(PreparedStatement statement)
                 throws SQLException
             {
-                statement.setInt(1, program.getId());
                 statement.setString(2, program.getName());
                 if (program.getDescription()!= null) {
                     statement.setString(3, program.getDescription());
