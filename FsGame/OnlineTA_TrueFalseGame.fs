@@ -52,12 +52,6 @@ let getQuestion (x) =
                  + string(array1.[1]) + " + " 
                  + string(array1.[2]) + ") then " + string(array2.[0]) + " else " 
                  + string(array2.[1]) + "\", \"answer\": \"" + string(answerCheck) + "\" }")
-
-  |3 -> 
-
-
-  |4 -> Console.WriteLine("4")
-  |5 -> Console.WriteLine("5")
   |_ -> ()
 
 ///Evaluates lemma against given answer versus calculated answer
@@ -69,7 +63,7 @@ let evalAnswer (question, answer) =
 [<EntryPoint>]
 let main(args) =
   if args.Length < 1 then
-    Console.Write("You need to give a function as an argument: getQuestion() or evalAnswer(question,answer)")
+    Console.Write("You need to give a function as an argument: getQuestion(x) or evalAnswer(question,answer)")
     -1
   else
     let funcType = args.[0]
