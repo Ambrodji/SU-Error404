@@ -49,10 +49,8 @@ public class UploadServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String uploadedBy = (String) request.getSession().getAttribute("user");
 		String description = request.getParameter("description");
-		String difficultyMinStr = "1"; //request.getParameter("difficultyMin");
-		String difficultyMaxStr = "2"; //request.getParameter("difficultyMax");
-		int difficultyMin = -1;
-		int difficultyMax = -1;
+		String difficultiesStr = request.getParameter("difficulties");
+		int difficulties = -1;
 		
 		// User not logged in
 		if (uploadedBy == null) {
@@ -61,15 +59,14 @@ public class UploadServlet extends HttpServlet {
 			return;
 		}
 		
-		if (name == null || description == null || difficultyMinStr == null || difficultyMaxStr == null) {
+		if (name == null || description == null || difficultiesStr == null) {
 			System.out.println("UploadServlet: Missing fields, sending error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		
 		try {
-			difficultyMin = Integer.parseInt(difficultyMinStr);
-			difficultyMax = Integer.parseInt(difficultyMaxStr);
+			difficulties= Integer.parseInt(difficultiesStr);
 		} catch (NumberFormatException e) {
 			System.out.println("UploadServlet: Failed to parse difficulty, sending error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -111,8 +108,7 @@ public class UploadServlet extends HttpServlet {
 	    	prog.setDescription(description);
 	    	prog.setFileName(fileName);
 	    	prog.setUploadedBy(uploadedBy);
-	    	prog.setDifficultyMin(difficultyMin);
-	    	prog.setDifficultyMax(difficultyMax);
+	    	prog.setDifficulties(difficulties);
 	    	
 	    	dao.insert(prog);
 	    	System.out.println("UploadServlet: Inserted program with name=" + name);

@@ -18,6 +18,12 @@
       <artifactId>sqlite-jdbc</artifactId>
       <version>3.7.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.6.2</version>
+    </dependency>
+
   </dependencies>
   <scm>
     <connection>scm:git:https://github.com/Ambrodji/SU-Error404.git</connection>
@@ -33,7 +39,6 @@
                 <encoding>UTF-8</encoding>
             </configuration>
         </plugin>
-
         <plugin>
             <artifactId>maven-war-plugin</artifactId>
             <version>2.4</version>

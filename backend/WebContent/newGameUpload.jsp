@@ -33,18 +33,11 @@
                   	</div>
                   </div>
                   <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <ul class="checkbox">
-                        <li><label>
-                            <input type="checkbox"/> Difficulty 1
-                        </label></li>
-                        <li><label>
-                            <input type="checkbox"/> Difficulty 2
-                        </label></li>
-                        <li><label>
-                            <input type="checkbox"/> Difficulty 3
-                        </label></li>
-                      </ul>
+                    <label  class="col-sm-2 control-label"
+                              for="inputDifficulty">Number of difficulty levels</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" 
+                        id="inputDifficulty" name="difficulties" placeholder="Ex. 3"/>
                     </div>
                   </div>
                   <div class="form-group">

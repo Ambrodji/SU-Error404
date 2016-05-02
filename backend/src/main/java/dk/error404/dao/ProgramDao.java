@@ -29,8 +29,7 @@ public class ProgramDao
         program.setDescription(description);
         program.setFileName(resultSet.getString("file_name"));
         program.setUploadedBy(resultSet.getString("uploaded_by"));
-        program.setDifficultyMin(resultSet.getInt("difficulty_min"));
-        program.setDifficultyMax(resultSet.getInt("difficulty_max"));
+        program.setDifficulties(resultSet.getInt("difficulties"));
         return program;
     }
 
@@ -43,7 +42,7 @@ public class ProgramDao
     }
 
     public void insert(final Program program) {
-        executeInsert("INSERT INTO `program` (`id`, `name`, `description`, `file_name`, `uploaded_by`, `difficulty_min`, `difficulty_max`) VALUES (?, ?, ?, ?, ?, ?, ?)", new Dao.ParameterSetter() {
+        executeInsert("INSERT INTO `program` (`id`, `name`, `description`, `file_name`, `uploaded_by`, `difficulties`) VALUES (?, ?, ?, ?, ?, ?)", new Dao.ParameterSetter() {
 
 
             @Override
@@ -58,8 +57,7 @@ public class ProgramDao
                 }
                 statement.setString(4, program.getFileName());
                 statement.setString(5, program.getUploadedBy());
-                statement.setInt(6, program.getDifficultyMin());
-                statement.setInt(7, program.getDifficultyMax());
+                statement.setInt(6, program.getDifficulties());
             }
 
         }, new Dao.IdSetter() {
@@ -73,7 +71,7 @@ public class ProgramDao
     }
 
     public void update(final Program program) {
-        executeUpdateDelete("UPDATE `program` SET `name` = ?, `description` = ?, `file_name` = ?, `uploaded_by` = ?, `difficulty_min` = ?, `difficulty_max` = ? WHERE `id` = ?", new Dao.ParameterSetter() {
+        executeUpdateDelete("UPDATE `program` SET `name` = ?, `description` = ?, `file_name` = ?, `uploaded_by` = ?, `difficulties` = ? WHERE `id` = ?", new Dao.ParameterSetter() {
 
 
             @Override
@@ -88,9 +86,8 @@ public class ProgramDao
                 }
                 statement.setString(3, program.getFileName());
                 statement.setString(4, program.getUploadedBy());
-                statement.setInt(5, program.getDifficultyMin());
-                statement.setInt(6, program.getDifficultyMax());
-                statement.setObject(7, program.getId());
+                statement.setInt(5, program.getDifficulties());
+                statement.setObject(6, program.getId());
             }
 
         }

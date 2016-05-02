@@ -29,14 +29,16 @@ Program prog = dao.findById(gameId);
 </br>
 
 <table class="table table-striped table-hover">
-<%
-for (int i = 1; i <= 5; i++) {%>
 	<tbody>
-		<tr class="answerRow" data-href='<%="?game=" + gameId %>&difficulty=<%=i%>' >
-			<td>Answer <%=i %></td>
+		<tr class="answerRow" data-href='<%="?game=" + gameId %>&difficulty=<%=gameDifficulty%>' >
+			<td>True</td>
 		</tr>
 	</tbody>
-<% } %>
+	<tbody>
+		<tr class="answerRow" data-href='<%="?game=" + gameId %>&difficulty=<%=gameDifficulty%>' >
+			<td>False</td>
+		</tr>
+	</tbody>
 </table>
 
 					

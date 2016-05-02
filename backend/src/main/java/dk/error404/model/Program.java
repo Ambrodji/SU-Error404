@@ -12,8 +12,7 @@ public class Program
     private String description;
     private String fileName;
     private String uploadedBy;
-    private int difficultyMin;
-    private int difficultyMax;
+    private int difficulties;
 
     public int getId() {
         return id;
@@ -55,20 +54,12 @@ public class Program
         this.uploadedBy = uploadedBy;
     }
 
-    public int getDifficultyMin() {
-        return difficultyMin;
+    public int getDifficulties() {
+        return difficulties;
     }
 
-    public void setDifficultyMin(int difficultyMin) {
-        this.difficultyMin = difficultyMin;
-    }
-
-    public int getDifficultyMax() {
-        return difficultyMax;
-    }
-
-    public void setDifficultyMax(int difficultyMax) {
-        this.difficultyMax = difficultyMax;
+    public void setDifficulties(int difficulties) {
+        this.difficulties = difficulties;
     }
 
 }

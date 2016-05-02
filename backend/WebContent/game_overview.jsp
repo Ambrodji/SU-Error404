@@ -28,7 +28,7 @@ Program prog = dao.findById(gameId);
 
 <table class="table table-striped table-hover">
 <%
-for (int i = 1; i <= prog.getDifficultyMax(); i++) {%>
+for (int i = 1; i <= prog.getDifficulties(); i++) {%>
 	<tbody>
 		<tr class="difficultyRow" data-href='<%="?game=" + gameId %>&difficulty=<%=i%>' >
 			<td>Level <%=i %></td>

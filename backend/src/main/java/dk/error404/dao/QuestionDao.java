@@ -22,7 +22,7 @@ public class QuestionDao
         Question question = new Question();
         question.setId(resultSet.getInt("id"));
         question.setUserId(resultSet.getString("user_id"));
-        question.setQuestionType(resultSet.getInt("question_type"));
+        question.setProgramId(resultSet.getInt("program_id"));
         question.setQuestionText(resultSet.getString("question_text"));
         String questionOptions = resultSet.getString("question_options");
         if (resultSet.wasNull()) {
@@ -55,17 +55,17 @@ public class QuestionDao
         return executeQuery(("SELECT * FROM question ORDER BY " + order+ " LIMIT " + start + ",  " + count+ " " ), null);
     }
 
-    public void insert(final Question question) {
-        executeInsert("INSERT INTO `question` (`id`, `user_id`, `question_type`, `question_text`, `question_options`, `answer`, `feedback`, `ts_completed`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", new Dao.ParameterSetter() {
+    public int insert(final Question question) {
+        return executeInsertQuery("INSERT INTO `question` (`id`, `user_id`, `program_id`, `question_text`, `question_options`, `answer`, `feedback`, `ts_completed`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", new Dao.ParameterSetter() {
 
 
             @Override
             public void setParameters(PreparedStatement statement)
                 throws SQLException
             {
-                statement.setInt(1, question.getId());
+                //statement.setInt(1, question.getId());
                 statement.setString(2, question.getUserId());
-                statement.setInt(3, question.getQuestionType());
+                statement.setInt(3, question.getProgramId());
                 statement.setString(4, question.getQuestionText());
                 if (question.getQuestionOptions()!= null) {
                     statement.setString(5, question.getQuestionOptions());
@@ -100,7 +100,7 @@ public class QuestionDao
     }
 
     public void update(final Question question) {
-        executeUpdateDelete("UPDATE `question` SET `user_id` = ?, `question_type` = ?, `question_text` = ?, `question_options` = ?, `answer` = ?, `feedback` = ?, `ts_completed` = ? WHERE `id` = ?", new Dao.ParameterSetter() {
+        executeUpdateDelete("UPDATE `question` SET `user_id` = ?, `program_id` = ?, `question_text` = ?, `question_options` = ?, `answer` = ?, `feedback` = ?, `ts_completed` = ? WHERE `id` = ?", new Dao.ParameterSetter() {
 
 
             @Override
@@ -108,7 +108,7 @@ public class QuestionDao
                 throws SQLException
             {
                 statement.setString(1, question.getUserId());
-                statement.setInt(2, question.getQuestionType());
+                statement.setInt(2, question.getProgramId());
                 statement.setString(3, question.getQuestionText());
                 if (question.getQuestionOptions()!= null) {
                     statement.setString(4, question.getQuestionOptions());

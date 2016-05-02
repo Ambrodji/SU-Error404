@@ -108,13 +108,12 @@ public abstract class Dao<T> {
 
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS PROGRAM " +
-	    			"(ID 			INT 	PRIMARY KEY	NOT NULL," +
+	    			"(ID 			INTEGER	PRIMARY KEY	AUTOINCREMENT," +
 	    			" NAME			TEXT	NOT NULL, " + 
 	    			" DESCRIPTION	TEXT, " +
 	    			" FILE_NAME		TEXT	NOT NULL, " +
 	    			" UPLOADED_BY	TEXT		NOT NULL,  " +
-	    			" DIFFICULTY_MAX	INT		NOT NULL,  " +
-	    			" DIFFICULTY_MIN	INT		NOT NULL);";
+	    			" DIFFICULTIES	INTEGER		NOT NULL);";
 	    	stmt.executeUpdate(sql);
 	    	stmt.close();
 	    	c.close();
@@ -132,9 +131,9 @@ public abstract class Dao<T> {
 
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS QUESTION " +
-	    			"(ID 			INT 	PRIMARY KEY	NOT NULL," +
-	    			" USER_ID		INT		NOT NULL, " + 
-	    			" QUESTION_TYPE	INT	NOT NULL, " +
+	    			"(ID 			INTEGER 	PRIMARY KEY	AUTOINCREMENT," +
+	    			" USER_ID		INTEGER		NOT NULL, " + 
+	    			" PROGRAM_ID	INTEGER	NOT NULL, " +
 	    			" QUESTION_TEXT	TEXT	NOT NULL, " +
 	    			" QUESTION_OPTIONS		TEXT, " +
 	    			" ANSWER		TEXT, " +
@@ -255,6 +254,37 @@ public abstract class Dao<T> {
                 }
             }
         }
+    }
+    
+    protected int executeInsertQuery(String sql, Dao.ParameterSetter parameters, Dao.IdSetter idSetter) {
+        Connection connection = null;
+        int resultId = -1;
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            if (parameters!= null) {
+                parameters.setParameters(statement);
+            }
+            statement.executeUpdate();
+            if (idSetter!= null) {
+                ResultSet key = statement.getGeneratedKeys();
+                if (key.next()) {
+                    idSetter.setId(key.getInt(1));
+                }
+                resultId = key.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (connection!= null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return resultId;
     }
    
     protected ArrayList<T> executeQuery(String sql, Dao.ParameterSetter parameters) {

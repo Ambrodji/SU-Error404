@@ -9,7 +9,7 @@ public class Question
 
     private int id;
     private String userId;
-    private int questionType;
+    private int programId;
     private String questionText;
     private String questionOptions;
     private String answer;
@@ -32,12 +32,12 @@ public class Question
         this.userId = userId;
     }
 
-    public int getQuestionType() {
-        return questionType;
+    public int getProgramId() {
+        return programId;
     }
 
-    public void setQuestionType(int questionType) {
-        this.questionType = questionType;
+    public void setProgramId(int programId) {
+        this.programId = programId;
     }
 
     public String getQuestionText() {
