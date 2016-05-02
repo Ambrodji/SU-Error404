@@ -13,8 +13,21 @@ jQuery(function(){
 
 jQuery(function(){
 	jQuery('#loadCreateUser').click(function(){
-		jQuery('#page-wrapper').load('createUserNew.jsp');
+		jQuery('#page-wrapper').load('create_user.jsp');
 	});
 })
+
+jQuery(function(){
+	jQuery('.gameRow').click(function(){
+		jQuery('#page-wrapper').load('game_overview.jsp' + $(this).data("href"));
+	});
+})
+
+jQuery(function(){
+	jQuery('.difficultyRow').click(function(){
+		jQuery('#page-wrapper').load('game_page.jsp' + $(this).data("href"));
+	});
+})
+
 
 </script>
