@@ -183,8 +183,8 @@ let mega(list) =
               |> Array.filter ((<>)"rm2")
               |> Array.filter ((<>)"")
 
-  let endRes = System.String.Join(" ", final)
-
+  let mutable endRes = System.String.Join(" ", final)
+  endRes <- endRes.Trim()
   endRes
 //return megalist and filter rm (remove) from it
 
@@ -209,8 +209,11 @@ let getQuestion (x) = (calcHandler x)
 let evalAnswer (question, answer) = 
   if mega(question) = answer then
     System.Console.WriteLine(true)
+    //printfn "%A" (mega(question))
   else
     System.Console.WriteLine(false)
+    //printfn "%A" (mega(question))
+
   
 //Takes command line arguments and calls given function
 [<EntryPoint>]
@@ -220,7 +223,8 @@ let main(args) =
     -1
   else
     let funcType = args.[0]
-    if funcType = "getQuestion" then 
+    if funcType = "getQuestion" then
+      printfn "Hint: Make spaces between ALL individual operators and numbers"
       let input1 = args.[1]
       getQuestion(int(input1))
       ()
