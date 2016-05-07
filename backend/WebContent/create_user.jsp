@@ -89,7 +89,7 @@
 		                            error: function(data) {
 		                            	alert("User could not be created");
 		                            }
-		                    });
+		                    	});
 		            	    }
 		            	});
 

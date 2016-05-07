@@ -132,7 +132,7 @@ public abstract class Dao<T> {
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS QUESTION " +
 	    			"(ID 			INTEGER 	PRIMARY KEY	AUTOINCREMENT," +
-	    			" USER_ID		INTEGER		NOT NULL, " + 
+	    			" USER_ID		INTEGER, " + 
 	    			" PROGRAM_ID	INTEGER	NOT NULL, " +
 	    			" QUESTION_TEXT	TEXT	NOT NULL, " +
 	    			" QUESTION_OPTIONS		TEXT, " +

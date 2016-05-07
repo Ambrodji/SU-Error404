@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 import com.google.gson.*;
@@ -27,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/GameServlet")
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String CORRECT_ANSWER = "correct";
+	private static final String INCORRECT_ANSWER = "incorrect";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -47,7 +50,7 @@ public class GameServlet extends HttpServlet {
 		int gameDifficulty = -1;
 		String questionStr = "";
 		if (gameIdStr == null) {
-			System.out.println("GameServlet: Missing game id str");
+			System.out.println("GameServlet: Missing game id str in /GET");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -55,7 +58,7 @@ public class GameServlet extends HttpServlet {
 			gameId = Integer.parseInt(gameIdStr);
 			gameDifficulty = Integer.parseInt(gameDifficultyStr);
 		} catch (NumberFormatException e) {
-			System.out.println("GameServlet: Unable to parse request arguments");
+			System.out.println("GameServlet: Unable to parse request arguments in /GET");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -63,7 +66,7 @@ public class GameServlet extends HttpServlet {
 		Program prog = dao.findById(gameId);
 		
 		if (prog != null) {
-			Process process = new ProcessBuilder("OnlineTA_TrueFalseGame.exe","getQuestion", gameDifficulty + "").start();
+			Process process = new ProcessBuilder(prog.getFileName(),"getQuestion", gameDifficulty + "").start();
 			InputStream is = process.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
@@ -73,7 +76,7 @@ public class GameServlet extends HttpServlet {
 				questionStr += line;
 			}
 		} else {
-			System.out.println("GameServlet: A program with the given ID could not be found in DB");
+			System.out.println("GameServlet: A program with the given ID could not be found in DB (/GET)");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -99,6 +102,7 @@ public class GameServlet extends HttpServlet {
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		System.out.println("GameServlet: writing response: " + result);
 		response.getWriter().print(result);
 		
 	}
@@ -108,8 +112,47 @@ public class GameServlet extends HttpServlet {
 	 */
 	// Used to evaluate an answer
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String answer = request.getParameter("answer");
+		String questionIdStr = request.getParameter("questionId");
+		int questionId = -1;
+		if (answer == null || questionIdStr == null) {
+			System.out.println("GameServlet: Missing answer or questionId in /POST");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
+		try {
+			questionId = Integer.parseInt(questionIdStr);
+		} catch (NumberFormatException e) {
+			System.out.println("GameServlet: Unable to parse questionId in /POST");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		
+		QuestionDao dao = new QuestionDao();
+		Question q = dao.findById(questionId);
+		// Find the question associated with the request
+		if (q != null) {
+			String dbAnswer = q.getAnswer();
+			// Compare if an answer already exists in DB. Fetch an answer from the program if not
+			if (dbAnswer != null) {
+				PrintWriter writer = response.getWriter();
+				if(dbAnswer.trim().equals(answer.trim())) {
+					writer.write(CORRECT_ANSWER);
+					return;
+				} else {
+					writer.write(INCORRECT_ANSWER);
+					return;
+				}
+			} else {
+				// Fetch
+			}
+		} else {
+			System.out.println("GameServlet: Unable to find questionId in DB (/POST)");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+		System.out.println("answer = " + answer);
+		
+		response.getWriter().println("numsetis");
 	}
 
 }

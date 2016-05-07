@@ -69,7 +69,10 @@
                             url: "UploadProg",
                             type: 'post',
                             dataType: 'text',
-                            data: $("#gameUploadForm").serialize(),
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: new FormData($(this)[0]), 
                             success: function(data) {
                                 alert("Your new game has been uploaded");
                                 location.reload(true);
