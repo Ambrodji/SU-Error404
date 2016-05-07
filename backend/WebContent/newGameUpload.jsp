@@ -23,13 +23,13 @@
                               for="inputTitle">Title</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" 
-                        id="inputTitle" name="name" placeholder="Title of game"/>
+                        id="name" name="name" placeholder="Title of game"/>
                     </div>
                   </div>
                   <div class="form-group">
                   	<label class="col-sm-2 control-label" for="inputGame" >Upload Game</label>
                   	<div class="col-sm-offset-2 col-sm-10">
-                  		<input type="file" name="file"/>
+                  		<input type="file" id="file" name="file"/>
                   	</div>
                   </div>
                   <div class="form-group">
@@ -37,14 +37,14 @@
                               for="inputDifficulty">Number of difficulty levels</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" 
-                        id="inputDifficulty" name="difficulties" placeholder="Ex. 3"/>
+                        id="difficulties" name="difficulties" placeholder="Ex. 3"/>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label"
                           for="inputDescription" >Description</label>
                     <div class="col-sm-10">
-                    	<textarea class="form-control" id="inputDescription" name="description" placeholder="Description"></textarea>
+                    	<textarea class="form-control" id="description" name="description" placeholder="Description"></textarea>
                     </div>
                   </div>
                   <!-- Modal Footer -->
@@ -59,6 +59,48 @@
             	  </div>
                 </form>           
             </div>
+            <script>
+		            
+		    $(document).ready(function(){
+		    	$("form#gameUploadForm").submit(function(event) {
+		        	event.preventDefault();
+            	    if ($("form").valid()) {
+            	    	$.ajax({
+                            url: "UploadProg",
+                            type: 'post',
+                            dataType: 'text',
+                            data: $("#gameUploadForm").serialize(),
+                            success: function(data) {
+                                alert("Your new game has been uploaded");
+                                location.reload(true);
+                            },
+                            error: function(data) {
+                            	alert("Game could not be created");
+                            }
+	                    });
+	            	}
+	            });
+
+            	$("form").validate({
+            	    rules: {
+            	        name: {
+            	        	required: true,
+            	        },
+            	        file: {
+            	        	required: true,
+            	        },
+            	        difficulties: {
+            	        	required: true,
+            	        },
+            	        description: {
+            	        	required: true,
+            	        }
+            	    },
+            	    messages: {}
+            	});
+            });
+	            
+            </script>
 
         </div>
     </div>

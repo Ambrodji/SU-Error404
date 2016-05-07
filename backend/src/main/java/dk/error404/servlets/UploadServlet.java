@@ -111,8 +111,11 @@ public class UploadServlet extends HttpServlet {
 	    	prog.setDifficulties(difficulties);
 	    	
 	    	dao.insert(prog);
+	    	
+	    	response.getWriter().println("success");
 	    	System.out.println("UploadServlet: Inserted program with name=" + name);
-	    	response.sendRedirect(request.getContextPath() + "/");
+			response.setStatus(HttpServletResponse.SC_CREATED);
+			
 	    	return;
 	    } else {
 	    	response.sendError(HttpServletResponse.SC_BAD_REQUEST);
