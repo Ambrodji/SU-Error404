@@ -43,7 +43,7 @@ public class DeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String programIdStr = request.getParameter("id");
+		String programIdStr = request.getParameter("programId");
 		String userId = (String) request.getSession().getAttribute("user");
 		
 		// User not logged in
@@ -73,10 +73,19 @@ public class DeleteServlet extends HttpServlet {
 		
 		PrintWriter writer = response.getWriter();
 		if (program != null) {
-			dao.delete(program);
-			System.out.println("DeleteServlet: Deleted program with id=" + programId);
-			writer.write(DELETED_SUCCESS);
-			return;
+			File file = new File(program.getFileName());
+			System.out.println("DeleteServlet: Deleting program with path=" + file.getAbsolutePath());
+			
+			if (file.delete()) {
+				System.out.println("DeleteServlet: Deleting program with id=" + programId + " from DB");
+				dao.delete(program);
+				writer.write(DELETED_SUCCESS);
+				return;
+			} else {
+				System.out.println("DeleteServlet: Deletion error. It was not possible to delete program with path="+ file.getAbsolutePath());
+				writer.write(DELETED_ERROR);
+				return;
+			}
 		} else {
 			System.out.println("DeleteServlet: Failed to find program in DB with id=" + programId);
 			writer.write(DELETED_ERROR);

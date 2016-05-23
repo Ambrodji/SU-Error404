@@ -19,30 +19,65 @@
             </div>
             
             <!-- Modal Body -->
-            <div class="modal-body" >
-                
+            <div class="modal-body gameDeleteDiv" >
                 <form id="gameDeleteForm" enctype="multipart/form-data" class="form-horizontal" role="form" method="POST" action="DeleteProg">
-                  <div class="form-group">
-                    <label  class="col-sm-2 control-label"
-                              for="activeGameTitles">Active games</label>
-                    <table class="table table-hover" id="tableDeleteGame">
+                  <div class="form-group noBottomMargin">
+                    <table class="table table-hover noBottomMargin" id="tableDeleteGame">
 						<% ProgramDao dao2 = new ProgramDao(); 
 						ArrayList<Program> programs2 = dao2.findAll();
 						for (Program p : programs2) {%>
-							<tr class="clickable-row" data-href="#">
+							<tr class="clickable-row " data-href='<%=p.getId() + ""%>'>
 								<th><%=p.getName() %></th>
 							</tr>
 						<%}%>
 						<script>
+							$.validator.setDefaults({ ignore: '' });
 							$('#tableDeleteGame').on('click', '.clickable-row', function(event) {
-							  if($(this).hasClass('active')){
-							    $(this).removeClass('active'); 
-							  } else {
-							    $(this).addClass('active').siblings().removeClass('active');
-							  }
+								$('.selected').removeClass('selected');
+								$(this).children(":first").addClass('selected');
+								$("#programId").val($(this).data("href"));
 							});
+				            
+						    $(document).ready(function(){
+						    	$('form#gameDeleteForm').submit(function(event) {
+						        	event.preventDefault();
+						        	jQuery.validator.addMethod("programSelected", function(value, element, param) {
+					            	    return $("#programId").val().length > 0;
+					            	}, "Please select a program to delete");
+				            	    if ($("form#gameDeleteForm").valid()) {
+				            	    	$.ajax({
+				                            url: "DeleteProg",
+				                            type: 'post',
+				                            dataType: 'text',
+				                            data: $("#programId").serialize(),
+				                            success: function(data) {
+				                            	if (data == "success") {
+				                            		alert("The selected program was deleted successfully.");
+				                            	} else {
+				                            		alert("The selected program could not be deleted");
+				                            	}
+				                                
+				                                location.reload(true);
+				                            },
+				                            error: function(data) {
+				                            	alert("The selected program could not be deleted");
+				                            }
+				                    	});
+					            	}
+					            });
+
+				            	$("form#gameDeleteForm").validate({
+				            	    rules: {
+				            	        programId: {
+				            	        	programSelected: true,
+				            	        }
+				            	    },
+				            	    messages: {}
+				            	});
+				            });
 						</script>
 					</table> 
+					<input type="text" name="programId" id="programId" style="display:none;">
                   </div>
                   
                   <!-- Modal Footer -->

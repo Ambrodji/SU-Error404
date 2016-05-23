@@ -164,11 +164,22 @@ body {
     background-color: LightGreen;
 }
 
+.table-hover tbody tr:hover .selected,
+.selected
+{
+    background-color: LightCoral;
+}
+
 .table-hover tbody tr:hover th
 {
-    background-color: LightGreen;
+    background-color: Yellow;
 }
-.table-hover tbody tr clickable-row:active th
+
+.gameDeleteDiv
 {
-    background-color: LightGreen;
+	padding-top: 0px;
+}
+.noBottomMargin
+{
+	margin-bottom: 0px;
 }
