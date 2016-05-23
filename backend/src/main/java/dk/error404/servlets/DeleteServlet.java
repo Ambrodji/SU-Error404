@@ -28,6 +28,8 @@ import dk.error404.model.Program;
 @MultipartConfig
 public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String DELETED_SUCCESS = "success";
+	private static final String DELETED_ERROR = "error";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -69,15 +71,18 @@ public class DeleteServlet extends HttpServlet {
 		ProgramDao dao = new ProgramDao();
 		Program program = dao.findById(programId);
 		
+		PrintWriter writer = response.getWriter();
 		if (program != null) {
 			dao.delete(program);
 			System.out.println("DeleteServlet: Deleted program with id=" + programId);
+			writer.write(DELETED_SUCCESS);
+			return;
 		} else {
-			System.out.println("DeleteServlet: Failed to find program in DB with id=" + programId + ", sending error");
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			System.out.println("DeleteServlet: Failed to find program in DB with id=" + programId);
+			writer.write(DELETED_ERROR);
+			return;
 		}
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().println("success");
+		
 		
 	}
 

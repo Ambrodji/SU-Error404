@@ -144,7 +144,7 @@ public class GameServlet extends HttpServlet {
 		// Find the question associated with the request
 		if (q != null) {
 			String dbAnswer = q.getAnswer();
-			// Compare if an answer already exists in DB. Fetch an answer from the program if not
+			// See if an answer already exists in DB. Fetch an answer from the program if not
 			if (dbAnswer != null) {
 				PrintWriter writer = response.getWriter();
 				if(dbAnswer.trim().equals(answer.trim())) {
@@ -156,6 +156,7 @@ public class GameServlet extends HttpServlet {
 				}
 			} else {
 				// Fetch
+				System.out.println("GameServlet: STUB. Not able to fetch missing question yet");
 			}
 		} else {
 			System.out.println("GameServlet: Unable to find questionId in DB (/POST)");
@@ -163,8 +164,6 @@ public class GameServlet extends HttpServlet {
 			return;
 		}
 		System.out.println("answer = " + answer);
-		
-		response.getWriter().println("numsetis");
 	}
 
 }

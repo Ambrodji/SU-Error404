@@ -41,8 +41,7 @@ public class UploadServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final String path = "."; //"/onlineTAprograms/";
-		
+		final String path = "."; //"/onlineTAprograms/";		
 		
 		Part filePart = request.getPart("file");
 		String fileName = getSubmittedFileName(filePart);
