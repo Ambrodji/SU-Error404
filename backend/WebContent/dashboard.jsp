@@ -1,4 +1,5 @@
 <%@include file="newGameUpload.jsp" %>
+<%@include file="gameDelete.jsp" %>
 <%@include file="navigation.jsp" %>
 <%@page import="dk.error404.dao.ProgramDao" %>
 <%@page import="dk.error404.model.Program" %>
@@ -18,7 +19,7 @@
 								<div class="btn-toolbar">
 									<div class="btn-group">
   										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#uploadGame"><span style="font-size:1em" class="glyphicon glyphicon-plus"></span></button>
-								  		<button type="button" class="btn btn-danger"><span style="font-size:1em" class="glyphicon glyphicon-minus"></span></button>
+								  		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteGame"><span style="font-size:1em" class="glyphicon glyphicon-minus"></span></button>
 								  		<button type="button" class="btn btn-info"><span style="font-size:1em" class="glyphicon glyphicon-signal"></span></button>
 									</div>
 								</div>

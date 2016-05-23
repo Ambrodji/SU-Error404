@@ -25,6 +25,10 @@ body {
     height: 100%;
 }
 
+#table-bordered .current a{
+	background-color: #d7000a!important;
+}
+
 
 /* button class */
 
@@ -156,6 +160,15 @@ body {
 }
 
 .table-hover tbody tr:hover td
+{
+    background-color: LightGreen;
+}
+
+.table-hover tbody tr:hover th
+{
+    background-color: LightGreen;
+}
+.table-hover tbody tr clickable-row:active th
 {
     background-color: LightGreen;
 }
