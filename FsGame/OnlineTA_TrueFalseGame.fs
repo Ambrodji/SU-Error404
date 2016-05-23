@@ -38,7 +38,6 @@ let getQuestion (x) =
           for i in 0..(array1.Length-1) do
             if (array1.[i] % (array1.[0])) = 0 then
               count <- count + array1.[i]
-              Console.WriteLine(count)
           if count < (array1.[1] + array1.[2]) then array2.[0] else array2.[1]
 
         /// Writes string for user to read
