@@ -9,36 +9,148 @@ int gameId = -1;
 int gameDifficulty = -1;
 if (gameIdStr == null) {
 	System.out.println("game_overview.jsp: Missing game id str");
+	response.sendError(500); // TODO: send proper error
+	return;
 }
 try {
 	gameId = Integer.parseInt(gameIdStr);
 	gameDifficulty = Integer.parseInt(gameDifficultyStr);
 } catch (NumberFormatException e) {
 	System.out.println("game_overview.jsp: Unable to parse request arguments");
+	response.sendError(500); // TODO: send proper error
+	return;
 }
 ProgramDao dao = new ProgramDao();
 Program prog = dao.findById(gameId);
 
 %>
-<h1>Overview - <%=prog.getName()%></h1>
-<b>Question</b>
+<h1><%=prog.getName()%></h1>
+<b>Description</b>
 </br>
 <%=prog.getDescription() %>
 </br></br>
-<b>Please select an answer:</b>
+<b>Question</b>
 </br>
+<p id="questionText">Loading....</p>
 
-<table class="table table-striped table-hover">
-	<tbody>
-		<tr class="answerRow" data-href='<%="?game=" + gameId %>&difficulty=<%=gameDifficulty%>' >
-			<td>True</td>
-		</tr>
-	</tbody>
-	<tbody>
-		<tr class="answerRow" data-href='<%="?game=" + gameId %>&difficulty=<%=gameDifficulty%>' >
-			<td>False</td>
-		</tr>
-	</tbody>
-</table>
+<div id="multipleChoice" style="display:none;">
+	<b>Please select an answer:</b>
+	</br>
+	<table class="table table-striped table-hover" id="multipleChoiceTable">
+	</table>
+</div>
+<div id="basicAnswer" style="display:none;">
+	<form id="basicAnswerForm" role="form">
+		<div class="form-group">
+			<label for="textAnswer">Please submit your answer in the field below:</label>
+			<input type="text" id="textAnswer" class="form-control">
+		</div>
+		<button type="submit" id="submitAnswerBtwn" class="btn btn-success">Submit Answer</button>
+	</form>
+</div>
+<div id="correctAnswer" style="display:none;" class="alert alert-success" role="alert"><b>Your answer was correct!</b></div>
+<div id="incorrectAnswer" style="display:none;" class="alert alert-danger" role="alert"><b>Your answer was incorrect!</b></div>
+<button id="nextQuestionBtn" style="display:none;" type="input" class="btn btn-primary">Next Question</button>
+
+<script>
+	var queryUrl = 'GameServlet';
+	var queryString = '<%="?game=" + gameId %>&difficulty=<%=gameDifficulty%>';
+	var questionId = -1;
+	
+	$(document).ready(function(){
+		getQuestion();
+		$("#basicAnswerForm").submit(function(event) {
+			event.preventDefault();
+			var answer = $("#textAnswer").val();
+			$("#textAnswer").addClass('uneditable-input');
+			$("#submitAnswerBtwn").css('display', 'none');
+			submitAnswer(answer);
+		});
+		$("#nextQuestionBtn").click(function() {
+			getQuestion();
+		});
+	});
+	
+	function submitAnswer(answer) {
+		$.ajax({
+            url: queryUrl,
+            type: 'post',
+            dataType: 'text',
+            data: {'answer' : answer, 'questionId' : questionId},
+            success: function(data) {
+                showFeedback(data);
+            },
+            error: function(data) {
+            	alert("Failed to submit question to server" + data);
+            	getQuestion();
+            }
+    	});
+		
+	}
+	
+	function showFeedback(data) {
+		if (data == "correct") {
+			$("#correctAnswer").css('display', 'block');
+		} else {
+			$("#incorrectAnswer").css('display', 'block');
+		}
+		$("#nextQuestionBtn").css('display', 'inline');
+	}
+	
+	function getQuestion() {
+		showLoading();
+		
+		$.get(queryUrl + queryString, function(data){
+			$("p#questionText").text(data.question);
+			questionId = data.questionId;
+			
+			if ($.isEmptyObject(data.choices)) {
+				startSingleChoice(data);
+			} else {
+				startMultipleChoice(data);
+			}
+		});
+	}
+	
+	function showLoading() {
+		$("questionText").text("Loading...");
+		$("#multipleChoiceTable").addClass('table-hover')
+		$("#submitAnswerBtwn").css('display', 'block');
+		$("#correctAnswer").css('display', 'none');
+		$("#incorrectAnswer").css('display', 'none');
+		$("#nextQuestionBtn").css('display', 'none');
+		$("#basicAnswer").css('display', 'none');
+		$("#multipleChoice").css('display', 'none');
+		$("#multipleChoiceTable").empty();
+		$("#textAnswer").val("");
+	}
+	
+	function startMultipleChoice(data) {
+		$("#multipleChoice").css('display', 'inline');
+		
+		$.each(data.choices, function(i, item) {
+			$("#multipleChoiceTable")
+				.append("<tbody><tr class=\"multipleChoiceRow\"><td>" + item + "</td></tr></tbody>")
+		});
+		
+		$(".multipleChoiceRow").click(function() {
+			var answer = $(this).text();
+		
+			$("#multipleChoiceTable").removeClass('table-hover')
+			if (!$(this).hasClass('disabled')) {
+				submitAnswer(answer);
+			}
+			$(".multipleChoiceRow").addClass('disabled');
+		});
+	}
+	
+	function startSingleChoice(data) {
+		$("#basicAnswer").css('display', 'inline');
+	}
+
+
+</script>
+
+
 
 					
