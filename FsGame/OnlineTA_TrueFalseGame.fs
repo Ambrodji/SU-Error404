@@ -45,12 +45,12 @@ let getQuestion (x) =
         for i in 0..(array1.Length-2) do
           arrString <- arrString + (string(array1.[i]) + ";")
 
-        Console.WriteLine("{ \"question\": \"let array1 = [|" + arrString + string(array1.[9]) + "|]\nlet mutable count = 0\n\n" 
-                 + "for i in 1..(array1.Length-1) do\n  if array1.[i] % " 
-                 + string(array1.[0]) + " = 0 then\n    count <- count + array1.[i] \n  if count < ("
+        Console.WriteLine("{ \"question\": \"let array1 = [|" + arrString + string(array1.[9]) + "|]\\nlet mutable count = 0\\n\\n" 
+                 + "for i in 1..(array1.Length-1) do\\n  if array1.[i] % " 
+                 + string(array1.[0]) + " = 0 then\\n    count <- count + array1.[i] \\n  if count < ("
                  + string(array1.[1]) + " + " 
                  + string(array1.[2]) + ") then " + string(array2.[0]) + " else " 
-                 + string(array2.[1]) + "\", \"answer\": \"" + string(answerCheck) + "\" }")
+                 + string(array2.[1]) + "\", \"answer\": \"" + string(answerCheck) + "\", \"choices\": [\"True\", \"False\"] }")
   |_ -> ()
 
 ///Evaluates lemma against given answer versus calculated answer
