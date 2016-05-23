@@ -95,7 +95,19 @@ public class GameServlet extends HttpServlet {
 		int questionId = qDao.insert(question);
 		
 		QuestionAPIDto questionAPIDto = new QuestionAPIDto();
-		questionAPIDto.setQuestion(questionDbDto.getQuestion());
+		
+		String DbDtoQuestion = questionDbDto.getQuestion();
+		
+		// Prevent NPE
+		DbDtoQuestion = (DbDtoQuestion == null) ? "" : DbDtoQuestion;
+		
+		// Replace newlines with proper HTML linebreaks
+		String htmlQuestionStr = DbDtoQuestion.replace("\n", " <br /> ");
+		
+		// Replace multiple spaces with &nbsp for correct HTML spacing
+		htmlQuestionStr = htmlQuestionStr.replace("  ",  " &nbsp&nbsp ");
+		
+		questionAPIDto.setQuestion(htmlQuestionStr);
 		questionAPIDto.setQuestionId(questionId);
 		questionAPIDto.setChoices(questionDbDto.getChoices());
 		String result = gson.toJson(questionAPIDto);

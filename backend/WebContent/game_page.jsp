@@ -101,7 +101,7 @@ Program prog = dao.findById(gameId);
 		showLoading();
 		
 		$.get(queryUrl + queryString, function(data){
-			$("p#questionText").text(data.question);
+			$("p#questionText").html(data.question);
 			questionId = data.questionId;
 			
 			if ($.isEmptyObject(data.choices)) {
