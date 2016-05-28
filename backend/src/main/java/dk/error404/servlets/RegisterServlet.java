@@ -69,7 +69,7 @@ public class RegisterServlet extends HttpServlet {
 		user.setEmail(email);
 		user.setPassword(password);
 		user.setSchool(school);
-		user.setUserType(1); // hardcoded admin rights. TODO: FIX THIS!!!
+		user.setUserType("admin"); // hardcoded admin rights. TODO: FIX THIS!!!
 		
 		dao.insert(user);
 		response.getWriter().println("success");

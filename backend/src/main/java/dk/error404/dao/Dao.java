@@ -14,6 +14,7 @@ import dk.error404.model.User;
 public abstract class Dao<T> {
 	private final String DATABASE_NAME = "error404database.db";
 	private static boolean initialized = false;
+	private static final boolean includeTestData = true;
 	
 	public Dao() {
 		// Initialize tables in DB in case they don't exist already
@@ -23,7 +24,9 @@ public abstract class Dao<T> {
 			System.out.println("Location: " + dbFile.getAbsolutePath());
 			initializeTabels();
 			initialized = true;
-			insertTestUser();
+			if (includeTestData) {
+				insertTestUsers();
+			}
 		}
 	}
 	
@@ -49,14 +52,25 @@ public abstract class Dao<T> {
 	    }*/
 	}
 	
+	private void insertTestUsers() {
+		UserDao dao = new UserDao();
+		if (dao.findById("test") == null) {
+			User user = new User();
+	    	user.setName("testperson");
+	    	user.setId("test");
+	    	user.setPassword("test");
+	    	user.setUserType("admin");
+	    	
+	    	dao.insert(user);
+		}
+	}
+	
 	private void initializeTabels() {
 		initializeUserTable();
-		initializeUserTypeTable();
 		initializeTeamTable();
 		initializeTeamParticipantTable();
 		initializeProgramTable();
 		initializeQuestionTable();
-		initializeQuestionTypeTable();
 		System.out.println("DB loaded.");
 	}
 	
@@ -149,25 +163,6 @@ public abstract class Dao<T> {
 	    }
 	}
 	
-	private void initializeQuestionTypeTable() {
-		Connection c = null;
-	    Statement stmt = null;
-	    try {
-	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
-
-	    	stmt = c.createStatement();
-	    	String sql = "CREATE TABLE IF NOT EXISTS QUESTION_TYPE " +
-	    			"(ID 			INT 	PRIMARY KEY	NOT NULL," +
-	    			" DESCRIPTION			TEXT	NOT NULL); ";
-	    	stmt.executeUpdate(sql);
-	    	stmt.close();
-	    	c.close();
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    }
-	}
-	
 	private void initializeUserTable() {
 		Connection c = null;
 	    Statement stmt = null;
@@ -183,37 +178,6 @@ public abstract class Dao<T> {
 	    			" EMAIL			TEXT, " +
 	    			" USER_TYPE		TEXT	NOT NULL," +
 	    			" SCHOOL		TEXT);";
-	    	stmt.executeUpdate(sql);
-	    	stmt.close();
-	    	c.close();
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    }
-	}
-	
-	private void insertTestUser() {
-		UserDao dao = new UserDao();
-		if (dao.findById("test") == null) {
-			User user = new User();
-	    	user.setName("testperson");
-	    	user.setId("test");
-	    	user.setPassword("test");
-	    	
-	    	dao.insert(user);
-		}
-	}
-	
-	private void initializeUserTypeTable() {
-		Connection c = null;
-	    Statement stmt = null;
-	    try {
-	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
-
-	    	stmt = c.createStatement();
-	    	String sql = "CREATE TABLE IF NOT EXISTS USER_TYPE " +
-	    			"(ID 			INT 	PRIMARY KEY	NOT NULL," +
-	    			" DESCRIPTION			TEXT	NOT NULL); ";
 	    	stmt.executeUpdate(sql);
 	    	stmt.close();
 	    	c.close();

@@ -33,7 +33,7 @@ public class UserDao
             email = null;
         }
         user.setEmail(email);
-        user.setUserType(resultSet.getInt("user_type"));
+        user.setUserType(resultSet.getString("user_type"));
         String school = resultSet.getString("school");
         if (resultSet.wasNull()) {
             school = null;
@@ -70,7 +70,11 @@ public class UserDao
                 } else {
                     statement.setNull(4, 12);
                 }
-                statement.setInt(5, user.getUserType());
+                if (user.getUserType() != null) {
+                	statement.setString(5, user.getUserType());
+                } else {
+                	statement.setString(5, User.DEFAULT_USER_TYPE);
+                }
                 if (user.getSchool()!= null) {
                     statement.setString(6, user.getSchool());
                 } else {
@@ -100,7 +104,11 @@ public class UserDao
                 } else {
                     statement.setNull(3, 12);
                 }
-                statement.setInt(4, user.getUserType());
+                if (user.getUserType() != null) {
+                	statement.setString(5, user.getUserType());
+                } else {
+                	statement.setString(5, User.DEFAULT_USER_TYPE);
+                }
                 if (user.getSchool()!= null) {
                     statement.setString(5, user.getSchool());
                 } else {

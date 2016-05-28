@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.*;
 
@@ -66,7 +68,7 @@ public class GameServlet extends HttpServlet {
 		Program prog = dao.findById(gameId);
 		
 		if (prog != null) {
-			Process process = new ProcessBuilder(prog.getFileName(),"getQuestion", gameDifficulty + "").start();
+			Process process = new ProcessBuilder(UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
 			InputStream is = process.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
@@ -89,6 +91,15 @@ public class GameServlet extends HttpServlet {
 		question.setAnswer(questionDbDto.getAnswer());
 		question.setQuestionOptions(""); // TODO: fix
 		question.setQuestionText(questionDbDto.getQuestion());
+		if (questionDbDto.getChoices() != null) {
+			String questionOptionsStr = "";
+			List<String> questionOptions = questionDbDto.getChoices();
+			for (int i = 0; i < questionOptions.size(); i++) {
+				questionOptionsStr = questionOptionsStr + questionOptions.get(i) + Question.OPTIONS_DELIMITER;
+			}
+			question.setQuestionOptions(questionOptionsStr);
+		}
+		
 		if (request.getSession().getAttribute("user") != null) {
 			question.setUserId((String) request.getSession().getAttribute("user"));
 		}
@@ -144,6 +155,11 @@ public class GameServlet extends HttpServlet {
 		// Find the question associated with the request
 		if (q != null) {
 			String dbAnswer = q.getAnswer();
+			Timestamp ts = new Timestamp(System.currentTimeMillis());
+			
+			q.setTsCompleted(ts.toString());
+			dao.update(q);
+			
 			// See if an answer already exists in DB. Fetch an answer from the program if not
 			if (dbAnswer != null) {
 				PrintWriter writer = response.getWriter();

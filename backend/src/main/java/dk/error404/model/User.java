@@ -11,8 +11,9 @@ public class User
     private String password;
     private String name;
     private String email;
-    private int userType;
+    private String userType;
     private String school;
+    public final static String DEFAULT_USER_TYPE = "student";
 
     public String getId() {
         return id;
@@ -46,11 +47,11 @@ public class User
         this.email = email;
     }
 
-    public int getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 
