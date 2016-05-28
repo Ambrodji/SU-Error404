@@ -31,7 +31,6 @@
 							</tr>
 						<%}%>
 						<script>
-							$.validator.setDefaults({ ignore: '' });
 							$('#tableDeleteGame').on('click', '.clickable-row', function(event) {
 								$('.selected').removeClass('selected');
 								$(this).children(":first").addClass('selected');
@@ -67,9 +66,10 @@
 					            });
 
 				            	$("form#gameDeleteForm").validate({
+				            		ignore: [],
 				            	    rules: {
 				            	        programId: {
-				            	        	programSelected: true,
+				            	        	programSelected: true
 				            	        }
 				            	    },
 				            	    messages: {}
