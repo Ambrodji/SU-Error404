@@ -73,7 +73,7 @@ public class DeleteServlet extends HttpServlet {
 		
 		PrintWriter writer = response.getWriter();
 		if (program != null) {
-			File file = new File(program.getFileName());
+			File file = new File(UploadServlet.PROGRAM_PATH + program.getFileName());
 			System.out.println("DeleteServlet: Deleting program with path=" + file.getAbsolutePath());
 			
 			if (file.delete()) {

@@ -28,6 +28,7 @@ import dk.error404.model.Program;
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String PROGRAM_PATH = "." + File.separator + "onlineTAprograms" + File.separator;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -41,10 +42,8 @@ public class UploadServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final String path = "."; //"/onlineTAprograms/";		
-		
 		Part filePart = request.getPart("file");
-		String fileName = getSubmittedFileName(filePart);
+		//String fileName = getSubmittedFileName(filePart);
 		String name = request.getParameter("name");
 		String uploadedBy = (String) request.getSession().getAttribute("user");
 		String description = request.getParameter("description");
@@ -65,7 +64,7 @@ public class UploadServlet extends HttpServlet {
 		}
 		
 		try {
-			difficulties= Integer.parseInt(difficultiesStr);
+			difficulties = Integer.parseInt(difficultiesStr);
 		} catch (NumberFormatException e) {
 			System.out.println("UploadServlet: Failed to parse difficulty, sending error");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -74,11 +73,14 @@ public class UploadServlet extends HttpServlet {
 		
 		OutputStream out = null;
 		InputStream filecontent = null;
+		File dir = new File(PROGRAM_PATH);
+		dir.mkdirs();
+		
+		File outFile = File.createTempFile(uploadedBy, ".exe", dir);
 	    
 	    boolean error = false;
 	    try {
-	        out = new FileOutputStream(new File(path + File.separator
-	                + fileName));
+	    	out = new FileOutputStream(outFile);
 	        filecontent = filePart.getInputStream();
 
 	        int read = 0;
@@ -105,7 +107,7 @@ public class UploadServlet extends HttpServlet {
 	    	Program prog = new Program();
 	    	prog.setName(name);
 	    	prog.setDescription(description);
-	    	prog.setFileName(fileName);
+	    	prog.setFileName(outFile.getName());
 	    	prog.setUploadedBy(uploadedBy);
 	    	prog.setDifficulties(difficulties);
 	    	
