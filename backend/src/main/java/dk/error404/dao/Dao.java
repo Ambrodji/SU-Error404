@@ -54,14 +54,44 @@ public abstract class Dao<T> {
 	
 	private void insertTestUsers() {
 		UserDao dao = new UserDao();
-		if (dao.findById("test") == null) {
+		int numberOfTAs = 5;
+		int numberOfStudents = 20;
+		
+		// Insert admin test user
+		if (dao.findById("admin") == null) {
 			User user = new User();
-	    	user.setName("testperson");
-	    	user.setId("test");
-	    	user.setPassword("test");
-	    	user.setUserType("admin");
-	    	
-	    	dao.insert(user);
+			user.setName("admin");
+			user.setId("admin");
+			user.setPassword("test");
+			user.setUserType("admin");
+			
+			dao.insert(user);
+		}
+		
+		// Insert TA's
+		for (int i = 1; i <= numberOfTAs; i++) {
+			if (dao.findById("ta" + i) == null) {
+				User user = new User();
+				user.setName("ta" + i + "name");
+				user.setId("ta"	+ i);
+				user.setPassword("test");
+				user.setUserType("ta");
+				
+				dao.insert(user);
+			}
+		}
+		
+		// Insert students
+		for (int i = 1; i <= numberOfStudents; i++) {
+			if (dao.findById("student" + i) == null) {
+				User user = new User();
+				user.setName("student" + i + "name");
+				user.setId("student"	+ i);
+				user.setPassword("test");
+				user.setUserType("student");
+				
+				dao.insert(user);
+			}
 		}
 	}
 	
