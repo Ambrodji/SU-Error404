@@ -15,15 +15,17 @@
 								<th>Completed</th>
 								<th>Progress</th>
 								<th>
-								<% if (request.getSession().getAttribute("user") != null) { %>
-								<div class="btn-toolbar">
-									<div class="btn-group">
-  										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#uploadGame"><span style="font-size:1em" class="glyphicon glyphicon-plus"></span></button>
-								  		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteGame"><span style="font-size:1em" class="glyphicon glyphicon-minus"></span></button>
-								  		<button type="button" class="btn btn-info"><span style="font-size:1em" class="glyphicon glyphicon-signal"></span></button>
+								<% 
+								String userType = (String) request.getSession().getAttribute("userType");
+								if (userType!= null && (userType.equals("admin") || userType.equals("ta"))) {%>
+									<div class="btn-toolbar">
+										<div class="btn-group">
+  											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#uploadGame"><span style="font-size:1em" class="glyphicon glyphicon-plus"></span></button>
+								  			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteGame"><span style="font-size:1em" class="glyphicon glyphicon-minus"></span></button>
+								  			<button type="button" class="btn btn-info"><span style="font-size:1em" class="glyphicon glyphicon-signal"></span></button>
+										</div>
 									</div>
-								</div>
-								<% } %>
+							<% 	} %>
 								</th>
 							</tr>
 						</thead>

@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
 		User user = dao.findById(userID);
 		if (user != null && user.getPassword().equals(password)) {
 			request.getSession().setAttribute("user", userID);
+			request.getSession().setAttribute("userType", user.getUserType());
 			response.sendRedirect(request.getContextPath() + "/");
 			return;
 		}

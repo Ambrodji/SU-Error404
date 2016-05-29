@@ -89,8 +89,8 @@ public class GameServlet extends HttpServlet {
 		Question question = new Question();
 		
 		question.setAnswer(questionDbDto.getAnswer());
-		question.setQuestionOptions(""); // TODO: fix
 		question.setQuestionText(questionDbDto.getQuestion());
+		question.setProgramId(gameId);
 		if (questionDbDto.getChoices() != null) {
 			String questionOptionsStr = "";
 			List<String> questionOptions = questionDbDto.getChoices();
