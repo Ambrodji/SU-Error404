@@ -14,6 +14,12 @@
           <ul class="nav navbar-nav">
           	<li><button type="button" class="button-tabs" id="loadDash">Dashboard</button></li>
           	<li><button type="button" class="button-tabs" id="loadHist">History</button></li>
+          	<% 
+          	String sessionUserType = (String) request.getSession().getAttribute("userType");
+          	if (sessionUserType != null && sessionUserType.equals("admin")) { %>
+          	<li><button type="button" class="button-tabs" id="loadUserOverview">Users</button></li>
+         <% } %>
+          	<li><button type="button" class="button-tabs" id="loadTeams">Teams</button></li>
           </ul>
         </div>
         <div id="navbarR" class="nav navbar-right top-nav">

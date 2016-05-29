@@ -12,6 +12,12 @@ jQuery(function(){
 })
 
 jQuery(function(){
+	jQuery('#loadUserOverview').click(function(){
+		jQuery('#page-wrapper').load('admin_user_overview.jsp');
+	});
+})
+
+jQuery(function(){
 	jQuery('#loadCreateUser').click(function(){
 		jQuery('#page-wrapper').load('create_user.jsp');
 	});
