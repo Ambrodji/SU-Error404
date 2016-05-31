@@ -41,43 +41,4 @@
           </ul>
         </div><!--/.nav-collapse -->
         <!-- Sidepanel navigation -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="#"> 1</a>
-                    </li>
-                    <li>
-                        <a href="#"> 2</a>
-                    </li>
-                    <li>
-                        <a href="#"> 3</a>
-                    </li>
-                    <li>
-                        <a href="#"> 4</a>
-                    </li>
-                    <li>
-                        <a href="#"> 5</a>
-                    </li>
-                    <li>
-                        <a href="#"> 6</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> 7 <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">7.1</a>
-                            </li>
-                            <li>
-                                <a href="#">7.2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"> 8</a>
-                    </li>
-                    <li>
-                        <a href="#"> 9</a>
-                    </li>
-                </ul>
-            </div>
     </nav>
