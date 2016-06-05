@@ -50,10 +50,8 @@ let Mega x =
   let k = Result x
   let ma1 = M1 k
   let ma2 = M2 k
-  printfn "%A" ma1
-  printfn "%A" ma2
 
-  printfn "%s%A%s%A%s%A" ("{\"question\": \"") (ma1) ("\n") (ma2) ("\"\n, \"answer\": \" ") (MatrixProduct(ma1,ma2))
+  printfn "%s%A%s%A%s%A%s" ("{\"question\": \"") (ma1) ("\n") (ma2) ("\"\n, \"answer\": \" ") (MatrixProduct(ma1,ma2)) ("\"}")
 
   //MatrixProduct (ma1,ma2) 
 
