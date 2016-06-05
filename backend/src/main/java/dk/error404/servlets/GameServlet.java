@@ -69,17 +69,22 @@ public class GameServlet extends HttpServlet {
 		
 		if (prog != null) {
 			Process process = null;
-			try {
-				process = new ProcessBuilder("mono", UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
-			} catch (IOException e) {
-				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " using Mono. Trying again with './'");
-			}
+			boolean running = false;
 			try {
 				process = new ProcessBuilder(UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
+				running = true;
 			} catch (IOException e) {
-				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " at all. Do you have an environment installed for running F# programs?");
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				return;
+				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " directly with './progname.exe'. Trying again with 'mono progname.exe'");
+			}
+			
+			if (running == false) {
+				try {
+					process = new ProcessBuilder("mono", UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
+				} catch (IOException e) {
+					System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " using Mono.  Do you have an environment installed for running F# programs?");
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					return;
+				}
 			}
 			
 			InputStream is = process.getInputStream();
