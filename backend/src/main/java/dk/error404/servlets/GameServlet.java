@@ -68,32 +68,17 @@ public class GameServlet extends HttpServlet {
 		Program prog = dao.findById(gameId);
 		
 		if (prog != null) {
-			Process process = null;
-			boolean running = false;
-			try {
-				process = new ProcessBuilder(UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
-				running = true;
-			} catch (IOException e) {
-				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " directly with './progname.exe'. Trying again with 'mono progname.exe'");
+			System.out.println("GameServlet: Getting question from " + prog.getFileName());
+			// Try getting the question directly
+			questionStr = getQuestionFromProg(prog, gameDifficulty, false);
+			if (questionStr == null) {
+				System.out.println("GameServlet: Trying Mono...");
+				// Try getting question by invoking mono
+				questionStr = getQuestionFromProg(prog, gameDifficulty, true);
 			}
-			
-			if (running == false) {
-				try {
-					process = new ProcessBuilder("mono", UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
-				} catch (IOException e) {
-					System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " using Mono.  Do you have an environment installed for running F# programs?");
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-					return;
-				}
-			}
-			
-			InputStream is = process.getInputStream();
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isr);
-			String line;
-
-			while ((line = br.readLine()) != null) {
-				questionStr += line;
+			if (questionStr == null || (questionStr != null && questionStr.isEmpty())) {
+				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " at all. Do you have an environment installed for running F# programs?");
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 		} else {
 			System.out.println("GameServlet: A program with the given ID could not be found in DB (/GET)");
@@ -146,6 +131,42 @@ public class GameServlet extends HttpServlet {
 		System.out.println("GameServlet: writing response: " + result);
 		response.getWriter().print(result);
 		
+	}
+	
+	private String getQuestionFromProg(Program prog, int difficulty, boolean useMono) {
+		String result = "";
+		Process process = null;
+		
+		try {
+			if (useMono) {
+				process = new ProcessBuilder("mono", UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", difficulty + "").start();
+			} else {
+				process = new ProcessBuilder(UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", difficulty + "").start();
+			}
+			
+			InputStream is = process.getInputStream();
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			
+			if (result != null && result.isEmpty()) {
+				return null;
+			}
+			return result;
+			
+		} catch (IOException e) {
+			if (useMono) {
+				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " using Mono ( 'mono progname.exe' )");
+			} else {
+				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " directly with './progname.exe'.");
+			}
+			
+			return null;
+		}
 	}
 
 	/**
