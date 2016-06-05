@@ -30,7 +30,11 @@
 		<% } %>
 	
 		<div id="page-wrapper" class="container-fluid">
-		 <%@include file ="dashboard.jsp" %>
+			<% if (authenticated) { %>
+				<%@include file="dashboard.jsp" %>
+			<% }else{ %>
+				<img src="OnlineTAimage.png" style="position:absolute; TOP:50px; LEFT:128px; WIDTH:80%">
+			<% } %>
 		</div>
 				
 	</div>
