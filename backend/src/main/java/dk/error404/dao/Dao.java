@@ -22,7 +22,7 @@ public abstract class Dao<T> {
 			System.out.println("Initializing DB...");
 			File dbFile = new File(DATABASE_NAME);
 			System.out.println("Location: " + dbFile.getAbsolutePath());
-			initializeTabels();
+			initializeTables();
 			initialized = true;
 			if (includeTestData) {
 				insertTestUsers();
@@ -95,7 +95,7 @@ public abstract class Dao<T> {
 		}
 	}
 	
-	private void initializeTabels() {
+	private void initializeTables() {
 		initializeUserTable();
 		initializeTeamTable();
 		initializeTeamParticipantTable();
