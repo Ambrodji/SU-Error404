@@ -33,10 +33,8 @@
 			<% if (authenticated) { %>
 				<%@include file="dashboard.jsp" %>
 			<% }else{ %>
-				<%@include file="menu_unauthenticated.jsp" %>
+				<img src="OnlineTAimage.png" style="position:absolute; TOP:50px; LEFT:128px; WIDTH:80%">
 			<% } %>
-		
-		 <%@include file =".jsp" %>
 		</div>
 				
 	</div>
