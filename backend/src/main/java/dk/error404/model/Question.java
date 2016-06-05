@@ -13,6 +13,7 @@ public class Question
     private String questionText;
     private String questionOptions;
     private String answer;
+    private String userAnswer;
     private String feedback;
     private String tsCompleted;
     public final static String OPTIONS_DELIMITER = "{[<>]}"; // Used to delimit options in DB. TODO: Use proper escaping/delimiting such as json
@@ -63,6 +64,14 @@ public class Question
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+    
+    public String getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
     }
 
     public String getFeedback() {

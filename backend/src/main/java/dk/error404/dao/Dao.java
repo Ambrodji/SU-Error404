@@ -183,6 +183,7 @@ public abstract class Dao<T> {
 	    			" QUESTION_TEXT	TEXT	NOT NULL, " +
 	    			" QUESTION_OPTIONS		TEXT, " +
 	    			" ANSWER		TEXT, " +
+	    			" USER_ANSWER TEXT," +
 	    			" FEEDBACK		TEXT, " +
 	    			" TS_COMPLETED	TEXT); ";
 	    	stmt.executeUpdate(sql);

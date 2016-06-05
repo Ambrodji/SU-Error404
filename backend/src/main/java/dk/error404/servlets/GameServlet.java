@@ -157,6 +157,7 @@ public class GameServlet extends HttpServlet {
 			String dbAnswer = q.getAnswer();
 			Timestamp ts = new Timestamp(System.currentTimeMillis());
 			
+			q.setUserAnswer(answer);
 			q.setTsCompleted(ts.toString());
 			dao.update(q);
 			

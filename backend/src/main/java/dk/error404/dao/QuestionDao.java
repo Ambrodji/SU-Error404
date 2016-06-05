@@ -34,6 +34,11 @@ public class QuestionDao
             answer = null;
         }
         question.setAnswer(answer);
+        String userAnswer = resultSet.getString("user_answer");
+        if (resultSet.wasNull()) {
+            userAnswer = null;
+        }
+        question.setUserAnswer(userAnswer);
         String feedback = resultSet.getString("feedback");
         if (resultSet.wasNull()) {
             feedback = null;
@@ -56,7 +61,7 @@ public class QuestionDao
     }
 
     public int insert(final Question question) {
-        return executeInsertQuery("INSERT INTO `question` (`id`, `user_id`, `program_id`, `question_text`, `question_options`, `answer`, `feedback`, `ts_completed`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", new Dao.ParameterSetter() {
+        return executeInsertQuery("INSERT INTO `question` (`id`, `user_id`, `program_id`, `question_text`, `question_options`, `answer`, `user_answer`, `feedback`, `ts_completed`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", new Dao.ParameterSetter() {
 
 
             @Override
@@ -77,15 +82,20 @@ public class QuestionDao
                 } else {
                     statement.setNull(6, 12);
                 }
-                if (question.getFeedback()!= null) {
-                    statement.setString(7, question.getFeedback());
+                if (question.getUserAnswer()!= null) {
+                    statement.setString(7, question.getUserAnswer());
                 } else {
                     statement.setNull(7, 12);
                 }
-                if (question.getTsCompleted()!= null) {
-                    statement.setString(8, question.getTsCompleted());
+                if (question.getFeedback()!= null) {
+                    statement.setString(8, question.getFeedback());
                 } else {
                     statement.setNull(8, 12);
+                }
+                if (question.getTsCompleted()!= null) {
+                    statement.setString(9, question.getTsCompleted());
+                } else {
+                    statement.setNull(9, 12);
                 }
             }
 
@@ -100,7 +110,7 @@ public class QuestionDao
     }
 
     public void update(final Question question) {
-        executeUpdateDelete("UPDATE `question` SET `user_id` = ?, `program_id` = ?, `question_text` = ?, `question_options` = ?, `answer` = ?, `feedback` = ?, `ts_completed` = ? WHERE `id` = ?", new Dao.ParameterSetter() {
+        executeUpdateDelete("UPDATE `question` SET `user_id` = ?, `program_id` = ?, `question_text` = ?, `question_options` = ?, `answer` = ?, `user_answer` = ?, `feedback` = ?, `ts_completed` = ? WHERE `id` = ?", new Dao.ParameterSetter() {
 
 
             @Override
@@ -120,17 +130,22 @@ public class QuestionDao
                 } else {
                     statement.setNull(5, 12);
                 }
-                if (question.getFeedback()!= null) {
-                    statement.setString(6, question.getFeedback());
+                if (question.getUserAnswer()!= null) {
+                    statement.setString(6, question.getUserAnswer());
                 } else {
                     statement.setNull(6, 12);
                 }
-                if (question.getTsCompleted()!= null) {
-                    statement.setString(7, question.getTsCompleted());
+                if (question.getFeedback()!= null) {
+                    statement.setString(7, question.getFeedback());
                 } else {
                     statement.setNull(7, 12);
                 }
-                statement.setObject(8, question.getId());
+                if (question.getTsCompleted()!= null) {
+                    statement.setString(8, question.getTsCompleted());
+                } else {
+                    statement.setNull(8, 12);
+                }
+                statement.setObject(9, question.getId());
             }
 
         }
