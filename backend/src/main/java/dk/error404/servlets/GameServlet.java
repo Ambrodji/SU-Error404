@@ -68,7 +68,20 @@ public class GameServlet extends HttpServlet {
 		Program prog = dao.findById(gameId);
 		
 		if (prog != null) {
-			Process process = new ProcessBuilder(UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
+			Process process = null;
+			try {
+				process = new ProcessBuilder("mono", UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
+			} catch (IOException e) {
+				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " using Mono. Trying again with './'");
+			}
+			try {
+				process = new ProcessBuilder(UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", gameDifficulty + "").start();
+			} catch (IOException e) {
+				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " at all. Do you have an environment installed for running F# programs?");
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				return;
+			}
+			
 			InputStream is = process.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
