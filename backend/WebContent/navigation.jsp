@@ -13,7 +13,7 @@ jQuery(function(){
 
 jQuery(function(){
 	jQuery('#loadUserOverview').click(function(){
-		jQuery('#page-wrapper').load('admin_user_overview.jsp');
+		jQuery('#page-wrapper').load('admin_user_list.jsp');
 	});
 })
 
@@ -32,6 +32,17 @@ jQuery(function(){
 jQuery(function(){
 	jQuery('.difficultyRow').click(function(){
 		jQuery('#page-wrapper').load('game_page.jsp' + $(this).data("href"));
+	});
+})
+
+jQuery(function(){
+	jQuery('.userRow').click(function(){
+		jQuery('#page-wrapper').load('user_overview.jsp' + $(this).data("href"));
+	});
+})
+jQuery(function(){
+	jQuery('#editProfileBtn').click(function(){
+		jQuery('#page-wrapper').load('user_edit.jsp' + $(this).data("href"));
 	});
 })
 

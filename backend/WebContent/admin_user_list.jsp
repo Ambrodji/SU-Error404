@@ -21,7 +21,7 @@
 		UserDao dao = new UserDao(); 
 		ArrayList<User> userList = dao.findAll();
 		for (User u : userList) {%>
-			<tr class="" data-href='<%="?userId=" + u.getId() %>' >
+			<tr class="userRow" data-href='<%="?user=" + u.getId() %>' >
 				<td><%=u.getId() %></td>
 				<td><%=u.getName() %></td>
 				<td><%=u.getEmail() %></td>
