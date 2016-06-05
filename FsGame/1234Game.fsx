@@ -51,7 +51,7 @@ let Mega x =
   let ma1 = M1 k
   let ma2 = M2 k
 
-  printfn "%s%A%s%A%s%A%s" ("{\"question\": \"") (ma1) ("\n") (ma2) ("\"\n, \"answer\": \" ") (MatrixProduct(ma1,ma2)) ("\"}")
+  printfn "%s%A%s%A%s%A%s" ("{\"question\": \"") (ma1) ("\n") (ma2) ("\"\n, \"answer\": \"") (MatrixProduct(ma1,ma2)) ("\"}")
 
   //MatrixProduct (ma1,ma2) 
 
@@ -78,7 +78,6 @@ let main(args) =
   else
     let funcType = args.[0]
     if funcType = "getQuestion" then
-      printfn "Hint: Make spaces between ALL individual operators and numbers"
       let input1 = args.[1]
       getQuestion(int(input1))
       ()
