@@ -30,7 +30,13 @@
 		<% } %>
 	
 		<div id="page-wrapper" class="container-fluid">
-		 <%@include file ="dashboard.jsp" %>
+			<% if (authenticated) { %>
+				<%@include file="dashboard.jsp" %>
+			<% }else{ %>
+				<%@include file="menu_unauthenticated.jsp" %>
+			<% } %>
+		
+		 <%@include file =".jsp" %>
 		</div>
 				
 	</div>

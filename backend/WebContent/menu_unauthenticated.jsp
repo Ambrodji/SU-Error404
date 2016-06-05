@@ -13,11 +13,6 @@
         <!-- Top menu items -->
 		<%@include file="create_user.jsp" %>
 		
-        <div id="navbar" class="nav navbar-left top-nav">
-          <ul class="nav navbar-nav">
-            <li><button type="button" class="button-tabs" id="loadDash">Dashboard</button></li>
-          </ul>
-        </div>
         <div id="navbarR" class="nav navbar-right top-nav">
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
