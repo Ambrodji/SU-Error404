@@ -101,6 +101,10 @@ Program prog = dao.findById(gameId);
 		showLoading();
 		
 		$.get(queryUrl + queryString, function(data){
+			if (data == "jsonerror") {
+				$("p#questionText").html("Error: The game returned an invalid JSON string. Please contact your system administrator or TA");
+				return;
+			}
 			$("p#questionText").html(data.question);
 			questionId = data.questionId;
 			

@@ -12,6 +12,7 @@ public class Conf {
 	// The following are used in the front-end. Be careful if you change these
 	private final static String AJAX_SUCCESS = "success";
 	private final static String AJAX_ERROR = "error";
+	private final static String AJAX_JSON_ERROR = "jsonerror";
 	private final static String ANSWER_CORRECT = "correct";
 	private final static String ANSWER_INCORRECT = "incorrect";
 	
@@ -19,6 +20,7 @@ public class Conf {
 	private static String program_dir = "/error404/OnlineTAPrograms/";
 	private static String database_name = "error404database.db";
 	private static String database_dir = "/error404/";
+	private static String prog_value_true = "True"; // The 'correct' response from various exe games
 	
 	
 	private Conf() {
@@ -57,6 +59,10 @@ public class Conf {
 		        	database_name = properties.getProperty("databaseName");
 		        	System.out.println("Conf: Updated databaseName. Value = " + database_name);
 		        }
+		        if (properties.getProperty("progValueTrue") != null) {
+		        	prog_value_true = properties.getProperty("progValueTrue");
+		        	System.out.println("Conf: Updated progValueTrue. Value = " + database_name);
+		        }
 		        resourceAsStream.close();
 		    }
 		    System.out.println("Conf: Successfully updated configuration");
@@ -85,12 +91,20 @@ public class Conf {
 		return database_dir + database_name;
 	}
 	
+	public String getProgValueTrue() {
+		return prog_value_true;
+	}
+	
 	public String getAjaxSuccess() {
 		return AJAX_SUCCESS;
 	}
 	
 	public String getAjaxError() {
 		return AJAX_ERROR;
+	}
+	
+	public String getAjaxJsonError() {
+		return AJAX_JSON_ERROR;
 	}
 	
 	public String getAnswerCorrect() {

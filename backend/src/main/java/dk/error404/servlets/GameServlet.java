@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,16 +68,8 @@ public class GameServlet extends HttpServlet {
 		Program prog = dao.findById(gameId);
 		
 		if (prog != null) {
-			System.out.println("GameServlet: Getting question from " + prog.getFileName());
-			// Try getting the question directly
-			questionStr = getQuestionFromProg(prog, gameDifficulty, false);
-			if (questionStr == null) {
-				System.out.println("GameServlet: Trying Mono...");
-				// Try getting question by invoking mono
-				questionStr = getQuestionFromProg(prog, gameDifficulty, true);
-			}
+			questionStr = getQuestionFromProg(prog, gameDifficulty);
 			if (questionStr == null || (questionStr != null && questionStr.isEmpty())) {
-				System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " at all. Do you have an environment installed for running F# programs?");
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 		} else {
@@ -85,7 +78,18 @@ public class GameServlet extends HttpServlet {
 			return;
 		}
 		Gson gson = new Gson();
-		QuestionDbDto questionDbDto = gson.fromJson(questionStr, QuestionDbDto.class);
+		QuestionDbDto questionDbDto = null;
+		
+		try {
+			questionDbDto = gson.fromJson(questionStr, QuestionDbDto.class);
+		} catch (JsonSyntaxException e) {
+			System.out.println("GameServlet: The program returned JSON that was invalid");
+			e.printStackTrace();
+			PrintWriter writer = response.getWriter();
+			writer.write(Conf.getInstance().getAjaxJsonError());
+			return;
+		}
+		
 		
 		QuestionDao qDao = new QuestionDao();
 		Question question = new Question();
@@ -132,15 +136,78 @@ public class GameServlet extends HttpServlet {
 		
 	}
 	
-	private String getQuestionFromProg(Program prog, int difficulty, boolean useMono) {
+	private String getQuestionFromProg(Program prog, int difficulty) {
+		String result = "";
+		System.out.println("GameServlet: Getting question from " + prog.getFileName());
+		
+		List<String> parameters = new ArrayList<String>();
+		parameters.add("getQuestion");
+		parameters.add(difficulty + "");
+		
+		// Try getting the question directly
+		result = getOutputFromProg(prog, parameters, false);
+		if (result == null) {
+			System.out.println("GameServlet: Trying Mono...");
+			// Try getting question by invoking mono
+			result = getOutputFromProg(prog, parameters, true);
+		}
+		if (result == null || (result != null && result.isEmpty())) {
+			System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " at all. Do you have an environment installed for running F# programs?");
+			return null;
+		}
+		return result;
+	}
+	
+	private boolean getEvaluationFromProg(Program prog, String question, String answer) {
+		String result = "";
+		boolean correct = false;
+		
+		System.out.println("GameServlet: Evaluating answer from " + prog.getFileName());
+		
+		List<String> parameters = new ArrayList<String>();
+		parameters.add("evalAnswer");
+		parameters.add("\"" + question + "\"");
+		parameters.add("\"" + answer + "\"");
+		
+		// Try getting the question directly
+		result = getOutputFromProg(prog, parameters, false);
+		if (result == null) {
+			System.out.println("GameServlet: Trying Mono...");
+			// Try getting question by invoking mono
+			result = getOutputFromProg(prog, parameters, true);
+		}
+		if (result == null || (result != null && result.isEmpty())) {
+			System.out.println("GameServlet: It was not possible to retrieve an answer from " + prog.getFileName() + " using evalAnswer. Do you have an environment installed for running F# programs? Returning false");
+		}
+		if (result.trim().toLowerCase().equals(Conf.getInstance().getProgValueTrue())) {
+			correct = true;
+		}
+		return correct;
+	}
+	
+	private String getOutputFromProg(Program prog, List<String> parameters, boolean useMono) {
 		String result = "";
 		Process process = null;
 		
 		try {
+			List<String> cmdArgs = new ArrayList<String>();
 			if (useMono) {
-				process = new ProcessBuilder("mono", Conf.getInstance().getProgramDir() + prog.getFileName(),"getQuestion", difficulty + "").start();
-			} else {
-				process = new ProcessBuilder(Conf.getInstance().getProgramDir() + prog.getFileName(),"getQuestion", difficulty + "").start();
+				cmdArgs.add("mono");
+			}
+			cmdArgs.add(Conf.getInstance().getProgramDir() + prog.getFileName());
+			for (String param : parameters) {
+				cmdArgs.add(param);
+			}
+			process = new ProcessBuilder(cmdArgs).start();
+			
+			if (process == null) {
+				if (useMono) {
+					System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " using Mono ( 'mono progname.exe' )");
+					return null;
+				} else {
+					System.out.println("GameServlet: It was not possible to run " + prog.getFileName() + " directly with './progname.exe'.");
+					return null;
+				}
 			}
 			
 			InputStream is = process.getInputStream();
@@ -210,15 +277,37 @@ public class GameServlet extends HttpServlet {
 					return;
 				}
 			} else {
-				// Fetch
-				System.out.println("GameServlet: STUB. Not able to fetch missing question yet");
+				int progId = q.getProgramId();
+				ProgramDao pDao = new ProgramDao();
+				
+				Program prog = pDao.findById(progId);
+				if (prog != null) {
+					
+				}
+				if (prog != null) {
+					PrintWriter writer = response.getWriter();
+					
+					System.out.println("GameServlet: Evaluating answer from " + prog.getFileName());
+					boolean correct = getEvaluationFromProg(prog, q.getQuestionText(), q.getUserAnswer());
+					
+					if(correct) {
+						writer.write(Conf.getInstance().getAnswerCorrect());
+						return;
+					} else {
+						writer.write(Conf.getInstance().getAnswerIncorrect());
+						return;
+					}
+				} else {
+					System.out.println("GameServlet: A program with the id specified in question object could not be found in DB (/POST)");
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					return;
+				}
 			}
 		} else {
 			System.out.println("GameServlet: Unable to find questionId in DB (/POST)");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		System.out.println("answer = " + answer);
 	}
 
 }
