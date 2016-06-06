@@ -18,11 +18,10 @@
             <li class="dropdown">
 						<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="margin-right:10px"><span class="glyphicon glyphicon-log-in"></span> Login <strong class="caret"></strong></a>
 						<div class="dropdown-menu" style="padding: 15px; padding-bottom: 10px; margin-right:10px">
-							<form method="post" action="login" accept-charset="UTF-8">
+							<form id="loginForm" method="post" action="login" accept-charset="UTF-8">
 								<input style="margin-bottom: 15px;" type="text" placeholder="Username" id="username" name="user">
 								<input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password">
-								<input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
-								<label class="string optional" for="user_remember_me"> Remember me</label>
+								<label id="loginError" style="display:none;">A user with the given username/password could not be found.</label>
 								<input style="margin-bottom: 5px;" class="btn btn-primary btn-block" type="submit" id="sign-in" value="Sign In" name="user">
 								<input style="margin-bottom: 5px;" class="btn btn-primary btn-block" type="button" id="createUserBtn" value="Create user" data-toggle="modal" data-target="#createUser">
 							</form>							
@@ -31,3 +30,28 @@
           </ul>
         </div><!--/.nav-collapse -->
     </nav>
+    <script>
+            
+$(document).ready(function(){
+	$("form#loginForm").submit(function(event) {
+		event.preventDefault();
+		$.ajax({
+			url: "login",
+			type: 'post',
+			dataType: 'text',
+			data: $("#loginForm").serialize(),
+			success: function(data) {
+				if (data == "success") {
+					$("#loginError").css('display', 'none');
+					location.reload(true);
+				} else {
+					$("#loginError").css('display', 'block');
+				}
+			}, error: function(data) {
+				$("#loginError").css('display', 'block');
+			}
+		});
+	});
+});
+		            
+		            </script>
