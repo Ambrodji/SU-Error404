@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import dk.error404.control.Conf;
 import dk.error404.dao.ProgramDao;
 import dk.error404.model.Program;
 
@@ -28,7 +29,6 @@ import dk.error404.model.Program;
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String PROGRAM_PATH = "." + File.separator + "onlineTAprograms" + File.separator;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -73,7 +73,7 @@ public class UploadServlet extends HttpServlet {
 		
 		OutputStream out = null;
 		InputStream filecontent = null;
-		File dir = new File(PROGRAM_PATH);
+		File dir = new File(Conf.getInstance().getProgramDir());
 		dir.mkdirs();
 		
 		File outFile = File.createTempFile(uploadedBy, ".exe", dir);

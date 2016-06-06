@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.google.gson.*;
 
+import dk.error404.control.Conf;
 import dk.error404.dao.ProgramDao;
 import dk.error404.dao.QuestionDao;
 import dk.error404.model.Program;
@@ -30,8 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/GameServlet")
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String CORRECT_ANSWER = "correct";
-	private static final String INCORRECT_ANSWER = "incorrect";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -139,9 +138,9 @@ public class GameServlet extends HttpServlet {
 		
 		try {
 			if (useMono) {
-				process = new ProcessBuilder("mono", UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", difficulty + "").start();
+				process = new ProcessBuilder("mono", Conf.getInstance().getProgramDir() + prog.getFileName(),"getQuestion", difficulty + "").start();
 			} else {
-				process = new ProcessBuilder(UploadServlet.PROGRAM_PATH + prog.getFileName(),"getQuestion", difficulty + "").start();
+				process = new ProcessBuilder(Conf.getInstance().getProgramDir() + prog.getFileName(),"getQuestion", difficulty + "").start();
 			}
 			
 			InputStream is = process.getInputStream();
@@ -204,10 +203,10 @@ public class GameServlet extends HttpServlet {
 			if (dbAnswer != null) {
 				PrintWriter writer = response.getWriter();
 				if(dbAnswer.trim().equals(answer.trim())) {
-					writer.write(CORRECT_ANSWER);
+					writer.write(Conf.getInstance().getAnswerCorrect());
 					return;
 				} else {
-					writer.write(INCORRECT_ANSWER);
+					writer.write(Conf.getInstance().getAnswerIncorrect());
 					return;
 				}
 			} else {

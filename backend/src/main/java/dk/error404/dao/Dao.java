@@ -9,30 +9,34 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import dk.error404.control.Conf;
 import dk.error404.model.User;
 
 public abstract class Dao<T> {
-	private final String DATABASE_NAME = "error404database.db";
 	private static boolean initialized = false;
 	private static final boolean includeTestData = true;
 	
 	public Dao() {
 		// Initialize tables in DB in case they don't exist already
 		if (!initialized) {
-			System.out.println("Initializing DB...");
-			File dbFile = new File(DATABASE_NAME);
-			System.out.println("Location: " + dbFile.getAbsolutePath());
-			initializeTables();
+			System.out.println("Initializing database " + Conf.getInstance().getDatabaseName() + "...");
+			File dbFile = new File(Conf.getInstance().getDatabasePath());
 			initialized = true;
+			
+			initializeTables();
+			
+			System.out.println("Database has been initialized.");
 			if (includeTestData) {
+				System.out.println("Inserting test data into database...");
 				insertTestUsers();
+				System.out.println("Test data has been inserted.");
 			}
 		}
 	}
 	
 	private boolean databaseExists()
 	{
-		File dbFile = new File(DATABASE_NAME);
+		File dbFile = new File(Conf.getInstance().getDatabasePath());
 	    return dbFile.exists();
 		/*Connection c = null;
 	    Statement stmt = null;
@@ -101,7 +105,6 @@ public abstract class Dao<T> {
 		initializeTeamParticipantTable();
 		initializeProgramTable();
 		initializeQuestionTable();
-		System.out.println("DB loaded.");
 	}
 	
 	private void initializeTeamTable() {
@@ -109,7 +112,7 @@ public abstract class Dao<T> {
 	    Statement stmt = null;
 	    try {
 	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+	    	c = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
 
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS TEAM " +
@@ -129,7 +132,7 @@ public abstract class Dao<T> {
 	    Statement stmt = null;
 	    try {
 	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+	    	c = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
 
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS TEAM_PARTICIPANT " +
@@ -150,7 +153,7 @@ public abstract class Dao<T> {
 	    Statement stmt = null;
 	    try {
 	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+	    	c = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
 
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS PROGRAM " +
@@ -173,7 +176,7 @@ public abstract class Dao<T> {
 	    Statement stmt = null;
 	    try {
 	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+	    	c = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
 
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS QUESTION " +
@@ -199,7 +202,7 @@ public abstract class Dao<T> {
 	    Statement stmt = null;
 	    try {
 	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+	    	c = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
 
 	    	stmt = c.createStatement();
 	    	String sql = "CREATE TABLE IF NOT EXISTS USER " +
@@ -228,7 +231,7 @@ public abstract class Dao<T> {
     protected void executeInsert(String sql, Dao.ParameterSetter parameters, Dao.IdSetter idSetter) {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             if (parameters!= null) {
                 parameters.setParameters(statement);
@@ -257,7 +260,7 @@ public abstract class Dao<T> {
         Connection connection = null;
         int resultId = -1;
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             if (parameters!= null) {
                 parameters.setParameters(statement);
@@ -288,7 +291,7 @@ public abstract class Dao<T> {
         ArrayList<T> result = new ArrayList<T>();
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
             PreparedStatement statement = connection.prepareStatement(sql);
             if (parameters!= null) {
                 parameters.setParameters(statement);
@@ -314,7 +317,7 @@ public abstract class Dao<T> {
     protected void executeUpdateDelete(String sql, Dao.ParameterSetter parameters) {
         Connection connection = null;
         try {
-        	connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+        	connection = DriverManager.getConnection("jdbc:sqlite:" + Conf.getInstance().getDatabasePath());
         	PreparedStatement statement = connection.prepareStatement(sql);
             if (parameters!= null) {
                 parameters.setParameters(statement);
