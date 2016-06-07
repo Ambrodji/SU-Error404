@@ -20,6 +20,11 @@ public abstract class Dao<T> {
 		// Initialize tables in DB in case they don't exist already
 		if (!initialized) {
 			System.out.println("Initializing database " + Conf.getInstance().getDatabaseName() + "...");
+			
+			// Make sure database dir exists
+			File dir = new File(Conf.getInstance().getDatabaseDir());
+			dir.mkdirs();
+			
 			File dbFile = new File(Conf.getInstance().getDatabasePath());
 			initialized = true;
 			
