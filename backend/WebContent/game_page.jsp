@@ -9,7 +9,7 @@ int gameId = -1;
 int gameDifficulty = -1;
 if (gameIdStr == null) {
 	System.out.println("game_overview.jsp: Missing game id str");
-	response.sendError(500); // TODO: send proper error
+	response.sendError(500);
 	return;
 }
 try {
@@ -17,7 +17,7 @@ try {
 	gameDifficulty = Integer.parseInt(gameDifficultyStr);
 } catch (NumberFormatException e) {
 	System.out.println("game_overview.jsp: Unable to parse request arguments");
-	response.sendError(500); // TODO: send proper error
+	response.sendError(500);
 	return;
 }
 ProgramDao dao = new ProgramDao();
@@ -26,16 +26,16 @@ Program prog = dao.findById(gameId);
 %>
 <h1><%=prog.getName()%></h1>
 <b>Description</b>
-</br>
+<br />
 <%=prog.getDescription() %>
-</br></br>
+<br /><br />
 <b>Question</b>
-</br>
+<br />
 <p id="questionText">Loading....</p>
 
 <div id="multipleChoice" style="display:none;">
 	<b>Please select an answer:</b>
-	</br>
+	<br />
 	<table class="table table-striped table-hover" id="multipleChoiceTable">
 	</table>
 </div>
@@ -50,7 +50,7 @@ Program prog = dao.findById(gameId);
 </div>
 <div id="correctAnswer" style="display:none;" class="alert alert-success" role="alert"><b>Your answer was correct!</b></div>
 <div id="incorrectAnswer" style="display:none;" class="alert alert-danger" role="alert"><b>Your answer was incorrect!</b></div>
-<button id="nextQuestionBtn" style="display:none;" type="input" class="btn btn-primary">Next Question</button>
+<button id="nextQuestionBtn" style="display:none;" class="btn btn-primary">Next Question</button>
 
 <script>
 	var queryUrl = 'GameServlet';

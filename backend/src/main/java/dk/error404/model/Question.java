@@ -7,7 +7,8 @@ public class Question
     implements Serializable
 {
 
-    private int id;
+	private static final long serialVersionUID = 1L;
+	private int id;
     private String userId;
     private int programId;
     private String questionText;

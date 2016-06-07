@@ -20,11 +20,11 @@ Program prog = dao.findById(gameId);
 %>
 <h1>Overview - <%=prog.getName()%></h1>
 <b>Description</b>
-</br>
+<br />
 <%=prog.getDescription() %>
-</br></br>
+<br /><br />
 <b>Please select a difficulty:</b>
-</br>
+<br />
 
 <table class="table table-striped table-hover">
 <%

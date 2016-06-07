@@ -35,7 +35,7 @@ if (user == null) {
   </fieldset>
   <fieldset class="form-group">
     <label for="userNameInput">Name</label>
-    <input type="input" class="form-control" id="userNameInput" value="<%=user.getName()%>">
+    <input class="form-control" id="userNameInput" value="<%=user.getName()%>">
   </fieldset>
   <fieldset class="form-group">
     <label for="userEmailInput">Email address</label>
@@ -43,7 +43,7 @@ if (user == null) {
   </fieldset>
   <fieldset class="form-group">
     <label for="userSchoolInput">School</label>
-    <input type="input" class="form-control" id="userSchoolInput" value="<%=user.getSchool()%>">
+    <input class="form-control" id="userSchoolInput" value="<%=user.getSchool()%>">
   </fieldset>
 
   <button type="submit" class="btn btn-primary">Save Changes</button>

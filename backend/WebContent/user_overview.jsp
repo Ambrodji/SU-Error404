@@ -21,22 +21,22 @@ if (user == null) {
 %>
 <h1>User: <%=user.getId()%></h1>
 <b>User type:</b>
-</br>
+<br />
 <%=user.getUserType() %>
-</br></br>
+<br /><br />
 <b>Name:</b>
-</br>
+<br />
 <%=user.getName() %>
-</br></br>
+<br /><br />
 <b>Email:</b>
-</br>
+<br />
 <%=user.getEmail() %>
-</br></br>
+<br /><br />
 <b>School:</b>
-</br>
+<br />
 <%=user.getSchool() %>
-</br></br>
-<button id="editProfileBtn" data-href='<%="?user=" + user.getId() %>' type="input" class="btn btn-primary">Edit Profile</button>
+<br /><br />
+<button id="editProfileBtn" data-href='<%="?user=" + user.getId() %>' class="btn btn-primary">Edit Profile</button>
 
 
 						

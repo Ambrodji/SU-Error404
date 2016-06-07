@@ -1,15 +1,11 @@
 package dk.error404.servlets;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +31,6 @@ public class UploadServlet extends HttpServlet {
      */
     public UploadServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -123,16 +118,6 @@ public class UploadServlet extends HttpServlet {
 	    	return; 
 	    }
 		
-	}
-	
-	private static String getSubmittedFileName(Part part) {
-	    for (String cd : part.getHeader("content-disposition").split(";")) {
-	        if (cd.trim().startsWith("filename")) {
-	            String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-	            return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix.
-	        }
-	    }
-	    return null;
 	}
 
 }

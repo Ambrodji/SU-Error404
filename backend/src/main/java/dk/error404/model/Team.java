@@ -7,7 +7,8 @@ public class Team
     implements Serializable
 {
 
-    private Integer id;
+	private static final long serialVersionUID = 1L;
+	private Integer id;
     private String name;
     private String description;
 

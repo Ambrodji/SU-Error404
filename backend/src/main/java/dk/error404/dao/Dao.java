@@ -25,7 +25,6 @@ public abstract class Dao<T> {
 			File dir = new File(Conf.getInstance().getDatabaseDir());
 			dir.mkdirs();
 			
-			File dbFile = new File(Conf.getInstance().getDatabasePath());
 			initialized = true;
 			
 			initializeTables();
@@ -37,28 +36,6 @@ public abstract class Dao<T> {
 				System.out.println("Test data has been inserted.");
 			}
 		}
-	}
-	
-	private boolean databaseExists()
-	{
-		File dbFile = new File(Conf.getInstance().getDatabasePath());
-	    return dbFile.exists();
-		/*Connection c = null;
-	    Statement stmt = null;
-	    try {
-	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
-
-	    	stmt = c.createStatement();
-	    	String sql = "SELECT COUNT(*) FROM USER;";
-	    	stmt.executeQuery(sql);
-	    	ResultSet results = stmt.getResultSet();
-	    	results.ne
-	    	stmt.close();
-	    	c.close();
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    }*/
 	}
 	
 	private void insertTestUsers() {

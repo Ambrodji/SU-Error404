@@ -1,24 +1,15 @@
 package dk.error404.servlets;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import javax.security.auth.login.Configuration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-
 import dk.error404.control.Conf;
 import dk.error404.dao.ProgramDao;
 import dk.error404.model.Program;
@@ -36,7 +27,6 @@ public class DeleteServlet extends HttpServlet {
      */
     public DeleteServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
