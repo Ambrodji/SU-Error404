@@ -1,7 +1,16 @@
-#load "OnlineTA_unitTestFinal.fsx"
+#load "JsonCheckFinal.fsx"
+open JSONTest
 open System
 
-/// Types that work with this program
+/// OnlineTA
+///
+/// How to compile:
+/// <code>
+/// fsharpc TrueFalseGame.fsx JsonCheckFinal.fsx
+/// </code>
+///
+/// Author: Error404
+/// Date: 2016/03/28
 
 let hint = ", \"hint\": \"Answer is always true or false\""
 let rnd = System.Random()
@@ -95,6 +104,9 @@ let main(args) =
         match input1 |> System.Int32.TryParse with
         | true, input1 -> 
           for i in 1..int(input1) do
-            JSONTest.testIteration (getQuestion(i), (i))
+            testIterationQuestion (getQuestion(i), (i))  
+          printfn "   -----\n"
+          testfn (evalAnswer("1", "1") = true) (evalAnswer("1", "1"))
+          testfn (evalAnswer("1", "2") = false) (evalAnswer("1", "2"))
         | false, _ -> printfn ("This argument should be an integer")
     0

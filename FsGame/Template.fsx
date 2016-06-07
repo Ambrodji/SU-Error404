@@ -1,10 +1,11 @@
-#load "OnlineTA_unitTestFinal.fsx"
+#load "JsonCheckFinal.fsx"
+open JSONTest
 
 /// OnlineTA
 ///
 /// How to compile:
 /// <code>
-/// fsharpc OnlineTA_Template.fs
+/// fsharpc Template.fsx JsonCheckFinal.fsx
 /// </code>
 ///
 /// Author: Error404
@@ -25,7 +26,7 @@ let getQuestion (x) =
   | 2 -> "{ \"question\": \"string1\", \"answer\": \"string2\", \"hint\": \"string3\" }"
   | 3 -> "{ \"question\": \"string1\", \"hint\": \"string3\", \"choices\": [\"True\", \"False\"] }"
   | 4 -> "{ \"question\": \"string1\", \"answer\": \"string2\", \"hint\": \"string3\", \"choices\": [\"True\", \"False\", \"Cool\"] }"
-  //Difficulty 1 should be the wildcard for less hassle.
+  ///Difficulty 1 should be the wildcard for less hassle.
   | _ -> "{ \"question\": \"string1\", \"hint\": \"string3\" }"
 
 /// <summary>Evaluates answer versus calculated answer, by calcutating the lemma</summary>
@@ -69,6 +70,9 @@ let main(args) =
         match input1 |> System.Int32.TryParse with
         | true, input1 -> 
           for i in 1..int(input1) do
-            JSONTest.testIteration (getQuestion(i), (i))
+            testIterationQuestion (getQuestion(i), (i))  
+          printfn "   -----\n"
+          testfn (evalAnswer("1", "1") = true) (evalAnswer("1", "1"))
+          testfn (evalAnswer("1", "2") = false) (evalAnswer("1", "2"))
         | false, _ -> printfn ("This argument should be an integer")
     0
