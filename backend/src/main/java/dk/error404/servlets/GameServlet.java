@@ -96,12 +96,14 @@ public class GameServlet extends HttpServlet {
 		question.setQuestionText(questionDbDto.getQuestion());
 		question.setProgramId(gameId);
 		if (questionDbDto.getChoices() != null) {
-			String questionOptionsStr = "";
-			List<String> questionOptions = questionDbDto.getChoices();
-			for (int i = 0; i < questionOptions.size(); i++) {
-				questionOptionsStr = questionOptionsStr + questionOptions.get(i) + Question.OPTIONS_DELIMITER;
+			try {
+				List<String> questionOptions = questionDbDto.getChoices();
+				String gsonOptions = gson.toJson(questionOptions);
+				question.setQuestionOptions(gsonOptions);
+			} catch (JsonSyntaxException e) {
+				System.out.println("GameServlet: Encountered error when setting questionOptions in question obj");
+				e.printStackTrace();
 			}
-			question.setQuestionOptions(questionOptionsStr);
 		}
 		
 		if (request.getSession().getAttribute("user") != null) {

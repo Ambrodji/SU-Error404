@@ -17,7 +17,6 @@ public class Question
     private String userAnswer;
     private String feedback;
     private String tsCompleted;
-    public final static String OPTIONS_DELIMITER = "{[<>]}"; // Used to delimit options in DB. TODO: Use proper escaping/delimiting such as json
 
     public int getId() {
         return id;

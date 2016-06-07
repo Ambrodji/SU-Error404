@@ -16,7 +16,7 @@
           	<li><button type="button" class="button-tabs" id="loadHist">History</button></li>
           	<% 
           	String sessionUserType = (String) request.getSession().getAttribute("userType");
-          	if (sessionUserType != null && sessionUserType.equals("admin")) { %>
+          	if (sessionUserType != null && (sessionUserType.equals("admin") || sessionUserType.equals("ta"))) { %>
           	<li><button type="button" class="button-tabs" id="loadUserOverview">Users</button></li>
          <% } %>
           	<li><button type="button" class="button-tabs" id="loadTeams">Teams</button></li>
