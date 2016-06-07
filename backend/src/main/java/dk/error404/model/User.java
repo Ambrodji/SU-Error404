@@ -14,7 +14,6 @@ public class User
     private String email;
     private String userType;
     private String school;
-    public final static String DEFAULT_USER_TYPE = "student";
 
     public String getId() {
         return id;

@@ -13,7 +13,7 @@ jQuery(function(){
 
 jQuery(function(){
 	jQuery('#loadUserOverview').click(function(){
-		jQuery('#page-wrapper').load('admin_user_list.jsp');
+		jQuery('#page-wrapper').load('user_list.jsp');
 	});
 })
 
@@ -40,6 +40,13 @@ jQuery(function(){
 		jQuery('#page-wrapper').load('user_overview.jsp' + $(this).data("href"));
 	});
 })
+
+jQuery(function(){
+	jQuery('#profileBtn').click(function(){
+		jQuery('#page-wrapper').load('user_overview.jsp' + $(this).data("href"));
+	});
+})
+
 jQuery(function(){
 	jQuery('#editProfileBtn').click(function(){
 		jQuery('#page-wrapper').load('user_edit.jsp' + $(this).data("href"));

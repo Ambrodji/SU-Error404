@@ -15,7 +15,7 @@ import dk.error404.dao.ProgramDao;
 import dk.error404.model.Program;
 
 /**
- * Servlet implementation class ProgramUploadServlet
+ * Servlet implementation class DeleteServlet
  */
 @WebServlet("/DeleteProg")
 @MultipartConfig

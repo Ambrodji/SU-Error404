@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dk.error404.control.Conf;
 import dk.error404.model.User;
 
 public class UserDao
@@ -73,7 +74,7 @@ public class UserDao
                 if (user.getUserType() != null) {
                 	statement.setString(5, user.getUserType());
                 } else {
-                	statement.setString(5, User.DEFAULT_USER_TYPE);
+                	statement.setString(5, Conf.getInstance().getDefaultUserType());
                 }
                 if (user.getSchool()!= null) {
                     statement.setString(6, user.getSchool());
@@ -105,9 +106,9 @@ public class UserDao
                     statement.setNull(3, 12);
                 }
                 if (user.getUserType() != null) {
-                	statement.setString(5, user.getUserType());
+                	statement.setString(4, user.getUserType());
                 } else {
-                	statement.setString(5, User.DEFAULT_USER_TYPE);
+                	statement.setString(4, Conf.getInstance().getDefaultUserType());
                 }
                 if (user.getSchool()!= null) {
                     statement.setString(5, user.getSchool());

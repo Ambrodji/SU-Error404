@@ -14,11 +14,7 @@
           <ul class="nav navbar-nav">
           	<li><button type="button" class="button-tabs" id="loadDash">Dashboard</button></li>
           	<li><button type="button" class="button-tabs" id="loadHist">History</button></li>
-          	<% 
-          	String sessionUserType = (String) request.getSession().getAttribute("userType");
-          	if (sessionUserType != null && (sessionUserType.equals("admin") || sessionUserType.equals("ta"))) { %>
           	<li><button type="button" class="button-tabs" id="loadUserOverview">Users</button></li>
-         <% } %>
           	<li><button type="button" class="button-tabs" id="loadTeams">Teams</button></li>
           </ul>
         </div>
@@ -28,7 +24,7 @@
 						<a class="dropdown-toggle" href="#" data-toggle="dropdown" style="margin-right:10px"><span class="glyphicon glyphicon-user"></span> <%=request.getSession().getAttribute("user") %> <strong class="caret"></strong></a>
 						<ul class="dropdown-menu" style="padding: 15px; padding-bottom: 10px; margin-right:10px">
 							<li style="padding-bottom:2px">
-								<a href="#"><span style="font-size:1em" class="glyphicon glyphicon-user"></span> <%=request.getSession().getAttribute("user") %></a>
+								<a id="profileBtn" data-href='<%="?user=" + request.getSession().getAttribute("user") %>' href="#"><span style="font-size:1em" class="glyphicon glyphicon-user"></span> <%=request.getSession().getAttribute("user") %></a>
 							</li>
 							<li style="padding-bottom:2px">
 								<a href="#"><span style="font-size:1em" class="glyphicon glyphicon-cog"></span> Settings</a>

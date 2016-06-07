@@ -21,6 +21,7 @@ public class Conf {
 	private static String database_name = "error404database.db";
 	private static String database_dir = "/error404/";
 	private static String prog_value_true = "True"; // The 'correct' response from various exe games
+	private static String default_user_type = "student";
 	
 	
 	private Conf() {
@@ -62,6 +63,10 @@ public class Conf {
 		        if (properties.getProperty("progValueTrue") != null) {
 		        	prog_value_true = properties.getProperty("progValueTrue");
 		        	System.out.println("Conf: Updated progValueTrue. Value = " + database_name);
+		        }
+		        if (properties.getProperty("defaultUserType") != null) {
+		        	default_user_type = properties.getProperty("defaultUserType");
+		        	System.out.println("Conf: Updated defaultUserType. Value = " + default_user_type);
 		        }
 		        resourceAsStream.close();
 		    }
@@ -113,6 +118,10 @@ public class Conf {
 	
 	public String getAnswerIncorrect() {
 		return ANSWER_INCORRECT; 
+	}
+	
+	public String getDefaultUserType() {
+		return default_user_type; 
 	}
 	
 }
