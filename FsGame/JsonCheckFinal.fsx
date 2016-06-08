@@ -46,6 +46,10 @@ let testIterationQuestion (func, nbFunc) =
   for i in 0..mustContain.Length-2 do
     if not(stringContains(func, mustContain.[i])) then
       contFailedArrayPrimary.[i] <- 1
+  if func.[func.Length - 1] <> '}' then
+    contFailedArrayPrimary.[1] <- 1
+  if func.[0] <> '{' then
+    contFailedArrayPrimary.[0] <- 1
     
   match func with
   ///If string does not contain ","

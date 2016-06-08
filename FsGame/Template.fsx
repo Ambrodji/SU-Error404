@@ -22,6 +22,8 @@ let getQuestion (x) =
   /// The order in wich the JSON is put, does not matter.
   /// \ is used to escape the quotation marks.
   /// Below is an example of string with both parameters:
+  /// If question contains strings use ''string'' instead.
+  /// If question contains \n use \\n instead
   match x with
   | 2 -> "{ \"question\": \"string1\", \"answer\": \"string2\", \"hint\": \"string3\" }"
   | 3 -> "{ \"question\": \"string1\", \"hint\": \"string3\", \"choices\": [\"True\", \"False\"] }"
@@ -74,5 +76,6 @@ let main(args) =
           printfn "   -----\n"
           testfn (evalAnswer("1", "1") = true) (evalAnswer("1", "1"))
           testfn (evalAnswer("1", "2") = false) (evalAnswer("1", "2"))
+          testfn (evalAnswer("1", 2) = false) (evalAnswer("1", 2))
         | false, _ -> printfn ("This argument should be an integer")
     0

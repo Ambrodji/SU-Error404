@@ -30,8 +30,7 @@ let booly () =
 ///Generates a lemma and calculates answer
 let getQuestion (x) = 
   match x with 
-  |2 -> " "
-  |3 -> let array1 = Array.init 10 (fun x -> foo 1 10)
+  |2 -> let array1 = Array.init 10 (fun x -> foo 1 10)
         let array2 = [| (booly ()); (booly ()) |]
 
         /// Checks if answer is correct
@@ -52,7 +51,7 @@ let getQuestion (x) =
                  + string(array1.[0]) + " = 0 then\\n    count <- count + array1.[i] \\n  if count < ("
                  + string(array1.[1]) + " + " 
                  + string(array1.[2]) + ") then " + string(array2.[0]) + " else " 
-                 + string(array2.[1]) + "\", \"answer\": \"" + string(answerCheck) + "\", \"choices\": [\"True\", \"False\"] }" + hint
+                 + string(array2.[1]) + "\", \"answer\": \"" + string(answerCheck) + "\", \"choices\": [\"True\", \"False\"]" + hint + " }"
   |_ -> let array1 = [| (foo 1 100); (foo 1 100) |]
         let array2 = [| (booly ()); (booly ()) |]
         let answerCheck = if array1.[0] < array1.[1] then
@@ -61,7 +60,7 @@ let getQuestion (x) =
         "{ \"question\": \"if " 
           + string(array1.[0]) + " < " + string(array1.[1]) 
           + " then " + string(array2.[0]) + " else " + string(array2.[1]) 
-          + "\", \"answer\": \"" + string(answerCheck) + "\", \"choices\": [\"True\", \"False\"] }" + hint
+          + "\", \"answer\": \"" + string(answerCheck) + "\", \"choices\": [\"True\", \"False\"]" + hint + " }"
 
 ///Evaluates lemma against given answer versus calculated answer
 let evalAnswer (question, answer) = 

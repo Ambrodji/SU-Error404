@@ -1,5 +1,7 @@
 // return = * + 1 2 - 3 4
-module AritGame
+#load "JsonCheckFinal.fsx"
+open JSONTest
+//module AritGame
 //////////////////////
 let a = System.Random()
 
@@ -37,11 +39,11 @@ let calcHandler x =
   let o = new Difficulty(x)
   let mutable outString =
     match x with
-      | x when ((x >= 1) && (x <= 5)) -> o.AritString x
-      | _ -> failwith "Index out of bounds"
+      | x when ((x >= 2) && (x <= 5)) -> o.AritString x
+      | _ -> o.AritString 1
   
-  System.Console.WriteLine("{ \"question\": \"" + outString + "\" }")
-  outString
+  "{ \"question\": \"" + outString + "\", \"hint\": \"Do well\" }"
+  //outString
   //printfn "\n %s \n \n" outString
   //printfn "%A" outString
   //printfn "%A" outString
@@ -208,31 +210,46 @@ let getQuestion (x) = (calcHandler x)
 
 let evalAnswer (question, answer) = 
   if mega(question) = answer then
-    System.Console.WriteLine(true)
-    //printfn "%A" (mega(question))
+    true
   else
-    System.Console.WriteLine(false)
-    //printfn "%A" (mega(question))
+    false
 
   
-//Takes command line arguments and calls given function
+/// <summary>Takes command line arguments and calls the given functions</summary>
+/// <returns>Unit</returns>
 [<EntryPoint>]
 let main(args) =
   if args.Length < 1 then
-    System.Console.Write("You need to give a function as an argument: getQuestion(x) or evalAnswer(question,answer)")
+    printfn("You need to give a function as an argument: getQuestion(x) or evalAnswer(question,answer)")
     -1
   else
     let funcType = args.[0]
     if funcType = "getQuestion" then
-      printfn "Hint: Make spaces between ALL individual operators and numbers"
-      let input1 = args.[1]
-      getQuestion(int(input1))
-      ()
+      if args.Length <> 2 then
+        printfn("getQuestion needs the following argument: [difficulty level]")
+      else
+        let input1 = args.[1]
+        match input1 |> System.Int32.TryParse with
+        | true, input1 -> printfn "%s" (getQuestion(input1))
+        | false, _ -> printfn ("This argument should be an integer")
     elif funcType = "evalAnswer" then
       if args.Length <> 3 then
-        System.Console.Write("evalAnswer needs the following arguments: [question] [answer]")
+        printfn("evalAnswer needs the following arguments: [question] [answer]")
       else
         let input1 = args.[1]
         let input2 = args.[2]
-        evalAnswer(input1, input2)
+        printfn "%b" (evalAnswer(input1, input2))
+    elif funcType = "debug" then
+      if args.Length <> 2 then
+        printfn("debug needs the following arguments: [number of runs]")
+      else
+        let input1 = args.[1]
+        match input1 |> System.Int32.TryParse with
+        | true, input1 -> 
+          for i in 1..int(input1) do
+            testIterationQuestion (getQuestion(i), (i))  
+          printfn "   -----\n"
+          testfn (evalAnswer("1", "1") = true) (evalAnswer("1", "1"))
+          testfn (evalAnswer("1", "2") = false) (evalAnswer("1", "2"))
+        | false, _ -> printfn ("This argument should be an integer")
     0
