@@ -7,7 +7,8 @@ public class TeamParticipant
     implements Serializable
 {
 
-    private String userId;
+	private static final long serialVersionUID = 1L;
+	private String userId;
     private int teamId;
     private String role;
 

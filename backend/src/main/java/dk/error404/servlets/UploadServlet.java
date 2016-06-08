@@ -1,15 +1,11 @@
 package dk.error404.servlets;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -18,24 +14,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import dk.error404.control.Conf;
 import dk.error404.dao.ProgramDao;
 import dk.error404.model.Program;
 
 /**
- * Servlet implementation class ProgramUploadServlet
+ * Servlet implementation class UploadServlet
  */
 @WebServlet("/UploadProg")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String PROGRAM_PATH = "." + File.separator + "onlineTAprograms" + File.separator;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public UploadServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -73,7 +68,7 @@ public class UploadServlet extends HttpServlet {
 		
 		OutputStream out = null;
 		InputStream filecontent = null;
-		File dir = new File(PROGRAM_PATH);
+		File dir = new File(Conf.getInstance().getProgramDir());
 		dir.mkdirs();
 		
 		File outFile = File.createTempFile(uploadedBy, ".exe", dir);
@@ -123,16 +118,6 @@ public class UploadServlet extends HttpServlet {
 	    	return; 
 	    }
 		
-	}
-	
-	private static String getSubmittedFileName(Part part) {
-	    for (String cd : part.getHeader("content-disposition").split(";")) {
-	        if (cd.trim().startsWith("filename")) {
-	            String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-	            return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1); // MSIE fix.
-	        }
-	    }
-	    return null;
 	}
 
 }

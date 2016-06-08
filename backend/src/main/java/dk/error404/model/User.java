@@ -7,13 +7,13 @@ public class User
     implements Serializable
 {
 
-    private String id;
+	private static final long serialVersionUID = 1L;
+	private String id;
     private String password;
     private String name;
     private String email;
     private String userType;
     private String school;
-    public final static String DEFAULT_USER_TYPE = "student";
 
     public String getId() {
         return id;

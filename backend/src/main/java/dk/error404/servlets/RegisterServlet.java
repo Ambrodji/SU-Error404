@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dk.error404.control.Conf;
 import dk.error404.dao.UserDao;
 import dk.error404.model.User;
 
@@ -22,7 +23,6 @@ public class RegisterServlet extends HttpServlet {
      */
     public RegisterServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/* Used to check if a user already exists */
@@ -69,10 +69,10 @@ public class RegisterServlet extends HttpServlet {
 		user.setEmail(email);
 		user.setPassword(password);
 		user.setSchool(school);
-		user.setUserType("admin"); // hardcoded admin rights. TODO: FIX THIS!!!
+		user.setUserType("student"); // A new user is always a student. An administrator/TA can change this in the "users" view if needed.
 		
 		dao.insert(user);
-		response.getWriter().println("success");
+		response.getWriter().println(Conf.getInstance().getAjaxSuccess());
 		System.out.println("RegisterServlet: Created user with id=" + userID);
 		
 		request.getSession().setAttribute("user", user.getId());

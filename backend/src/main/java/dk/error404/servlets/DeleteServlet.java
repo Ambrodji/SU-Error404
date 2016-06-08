@@ -1,13 +1,7 @@
 package dk.error404.servlets;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -16,27 +10,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-
+import dk.error404.control.Conf;
 import dk.error404.dao.ProgramDao;
 import dk.error404.model.Program;
 
 /**
- * Servlet implementation class ProgramUploadServlet
+ * Servlet implementation class DeleteServlet
  */
 @WebServlet("/DeleteProg")
 @MultipartConfig
 public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String DELETED_SUCCESS = "success";
-	private static final String DELETED_ERROR = "error";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public DeleteServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -73,22 +63,22 @@ public class DeleteServlet extends HttpServlet {
 		
 		PrintWriter writer = response.getWriter();
 		if (program != null) {
-			File file = new File(UploadServlet.PROGRAM_PATH + program.getFileName());
+			File file = new File(Conf.getInstance().getProgramDir() + program.getFileName());
 			System.out.println("DeleteServlet: Deleting program with path=" + file.getAbsolutePath());
 			
 			if (file.delete()) {
 				System.out.println("DeleteServlet: Deleting program with id=" + programId + " from DB");
 				dao.delete(program);
-				writer.write(DELETED_SUCCESS);
+				writer.write(Conf.getInstance().getAjaxSuccess());
 				return;
 			} else {
 				System.out.println("DeleteServlet: Deletion error. It was not possible to delete program with path="+ file.getAbsolutePath());
-				writer.write(DELETED_ERROR);
+				writer.write(Conf.getInstance().getAjaxError());
 				return;
 			}
 		} else {
 			System.out.println("DeleteServlet: Failed to find program in DB with id=" + programId);
-			writer.write(DELETED_ERROR);
+			writer.write(Conf.getInstance().getAjaxError());
 			return;
 		}
 		

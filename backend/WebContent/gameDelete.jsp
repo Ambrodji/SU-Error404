@@ -30,52 +30,6 @@
 								<th><%=p.getName() %></th>
 							</tr>
 						<%}%>
-						<script>
-							$('#tableDeleteGame').on('click', '.clickable-row', function(event) {
-								$('.selected').removeClass('selected');
-								$(this).children(":first").addClass('selected');
-								$("#programId").val($(this).data("href"));
-							});
-				            
-						    $(document).ready(function(){
-						    	$('form#gameDeleteForm').submit(function(event) {
-						        	event.preventDefault();
-						        	jQuery.validator.addMethod("programSelected", function(value, element, param) {
-					            	    return $("#programId").val().length > 0;
-					            	}, "Please select a program to delete");
-				            	    if ($("form#gameDeleteForm").valid()) {
-				            	    	$.ajax({
-				                            url: "DeleteProg",
-				                            type: 'post',
-				                            dataType: 'text',
-				                            data: $("#programId").serialize(),
-				                            success: function(data) {
-				                            	if (data == "success") {
-				                            		alert("The selected program was deleted successfully.");
-				                            	} else {
-				                            		alert("The selected program could not be deleted");
-				                            	}
-				                                
-				                                location.reload(true);
-				                            },
-				                            error: function(data) {
-				                            	alert("The selected program could not be deleted");
-				                            }
-				                    	});
-					            	}
-					            });
-
-				            	$("form#gameDeleteForm").validate({
-				            		ignore: [],
-				            	    rules: {
-				            	        programId: {
-				            	        	programSelected: true
-				            	        }
-				            	    },
-				            	    messages: {}
-				            	});
-				            });
-						</script>
 					</table> 
 					<input type="text" name="programId" id="programId" style="display:none;">
                   </div>
@@ -90,7 +44,53 @@
                     Delete
                 	</button>
             	  </div>
-                </form>           
+                </form>     
+					<script>
+						$('#tableDeleteGame').on('click', '.clickable-row', function(event) {
+							$('.selected').removeClass('selected');
+							$(this).children(":first").addClass('selected');
+							$("#programId").val($(this).data("href"));
+						});
+				            
+						$(document).ready(function(){
+						    $('form#gameDeleteForm').submit(function(event) {
+						        event.preventDefault();
+						        jQuery.validator.addMethod("programSelected", function(value, element, param) {
+					            	return $("#programId").val().length > 0;
+					            }, "Please select a program to delete");
+				            	if ($("form#gameDeleteForm").valid()) {
+				            		$.ajax({
+				                	url: "DeleteProg",
+				                    type: 'post',
+				                    dataType: 'text',
+				                    data: $("#programId").serialize(),
+				                    success: function(data) {
+				                    	if (data == "success") {
+				                        	alert("The selected program was deleted successfully.");
+				                        } else {
+				                        	alert("The selected program could not be deleted");
+				                        }
+				                                
+				                      	location.reload(true);
+				                        },
+				                        error: function(data) {
+				                        	alert("The selected program could not be deleted");
+				                        }
+				                    });
+					            }
+					  		});
+
+				            $("form#gameDeleteForm").validate({
+				            	ignore: [],
+				            		rules: {
+				            	    	programId: {
+				            	       		programSelected: true
+				            	        }
+				            	    },
+				            	messages: {}
+				            });
+				   		});
+				</script>     
             </div>
         </div>
     </div>
