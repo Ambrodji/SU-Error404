@@ -1,4 +1,3 @@
-<%@include file="newGameUpload.jsp" %>
 <%@page import="dk.error404.dao.ProgramDao" %>
 <%@page import="dk.error404.model.Program" %>
 <%@page import="java.util.ArrayList" %>

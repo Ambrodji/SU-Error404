@@ -1,6 +1,4 @@
-<%@include file="newGameUpload.jsp" %>
-<%@include file="gameDelete.jsp" %>
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_page.jsp" %>
 <%@page import="dk.error404.dao.UserDao" %>
 <%@page import="dk.error404.model.User" %>
 <%@page import="java.util.ArrayList" %>

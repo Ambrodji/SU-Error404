@@ -1,8 +1,7 @@
-<%@include file="newGameUpload.jsp" %>
 <%@page import="dk.error404.dao.UserDao" %>
 <%@page import="dk.error404.model.User" %>
 <%@page import="java.util.ArrayList" %>
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_page.jsp" %>
 
 <% 
 String userId = request.getParameter("user");

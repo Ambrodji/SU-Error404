@@ -11,7 +11,7 @@
         </div>
         
         <!-- Top menu items -->
-		<%@include file="create_user.jsp" %>
+		<%@include file="modal_user_create.jsp" %>
 		
         <div id="navbarR" class="nav navbar-right top-nav">
           <ul class="nav navbar-nav navbar-right">

@@ -1,6 +1,6 @@
-<%@include file="newGameUpload.jsp" %>
-<%@include file="gameDelete.jsp" %>
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_page.jsp" %>
+<%@include file="modal_game_create.jsp" %>
+<%@include file="modal_game_delete.jsp" %>
 <%@page import="dk.error404.dao.ProgramDao" %>
 <%@page import="dk.error404.model.Program" %>
 <%@page import="java.util.ArrayList" %>

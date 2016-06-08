@@ -1,8 +1,7 @@
-<%@include file="newGameUpload.jsp" %>
 <%@page import="dk.error404.dao.ProgramDao" %>
 <%@page import="dk.error404.model.Program" %>
 <%@page import="java.util.ArrayList" %>
-<%@include file="navigation.jsp" %>
+<%@include file="navigation_page.jsp" %>
 <% 
 String gameIdStr = request.getParameter("game");
 int gameId = -1;
