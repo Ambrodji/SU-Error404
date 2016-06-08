@@ -12,6 +12,28 @@ open JSONTest
 /// Date: 2016/03/28
 
 
+let rnd = System.Random()
+
+///Useful function for converting arrays and 2Darrays into strings
+///The functions are not neccessary
+let convertToString (l: 'a seq) = "[|" + System.String.Join("; ", l) + "|]"
+
+let flatten (A: 'a[,]) = A |> Seq.cast<'a>
+
+let getColumn c (A:_[,]) =
+    flatten A.[*,c..c] |> Seq.toArray
+
+let getRow r (A:_[,]) =
+    flatten A.[r..r,*] |> Seq.toArray
+
+let flattenToString (A: 'a[,]) =
+    let mutable str = ""
+    for i in 0..A.GetLength(0)-2 do
+      str <- str + convertToString (getRow i A) + ";\\n"
+    str <- "[|" + str + (convertToString (getRow (A.GetLength(0)-1) (A))) + "|]"
+    str
+///Useful End
+
 /// <summary>Generates a question based on the game type</summary>
 /// <returns>String</returns>
 let getQuestion (x) = 

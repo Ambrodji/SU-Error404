@@ -14,8 +14,21 @@ open System
 
 let rnd = System.Random()
 
-let ConvertToString (l: 'a seq) = "[|" + System.String.Join("; ", l) + "|]"
-//let ConvertToString1 (l: 'a seq) = for i in 0..l.Lenght-1 do ("[|" + System.String.Join("; ", l) + "|]")
+let convertToString (l: 'a seq) = "[|" + System.String.Join("; ", l) + "|]"
+
+let flatten (A: 'a[,]) = A |> Seq.cast<'a>
+
+let getRow r (A:_[,]) =
+    flatten A.[r..r,*] |> Seq.toArray  
+
+let flattenToString (A: 'a[,]) =
+    let mutable str = ""
+    for i in 0..A.GetLength(0)-2 do
+      str <- str + convertToString (getRow i A) + ";\\n"
+    str <- "[|" + str + (convertToString (getRow (A.GetLength(0)-1) (A))) + "|]"
+    str
+
+//let convertToString1 (l: 'a seq) = for i in 0..l.Lenght-1 do ("[|" + System.String.Join("; ", l) + "|]")
 
 /// Return a random bool from minNum to maxNum
 let foo minNum maxNum = 
@@ -31,8 +44,8 @@ let getQuestion (x) =
   | 2 ->  let array1 = [| for i in 1 .. 10 -> (foo 1 9) * (foo 1 9) |]
           let randIndex1 = foo 0 (array1.Length-1)
           let answer1 = array1.[randIndex1]
-          let op = ConvertToString array1
-          ("{ \"question\": \"let array1 =") + ConvertToString array1 + ("\\nIndex") + string(randIndex1) 
+          let op = convertToString array1
+          ("{ \"question\": \"let array1 =  ") + (convertToString array1) + ("\\n\\nIndex ") + string(randIndex1) 
           + (" = ?\", \"answer\": \"") + string(answer1) + ("\"") + hint + (" }")
   | 3 ->  let mutable array1 = Array2D.create 10 10 0
           for i in 0..9 do
@@ -40,27 +53,27 @@ let getQuestion (x) =
               array1.[i,j] <- (foo 1 9)
           let index2D1 = (foo 1 9)
           let index2D2 = (foo 1 9)
-          ("{ \"question\": \"let array1 = \\n") + array1.ToString() + ("\\nIndex[") + string(index2D1)
+          ("{ \"question\": \"let array1 = \\n") + (flattenToString array1) + ("\\n\\nIndex[") + string(index2D1)
           + (",") + string(index2D2) + ("] = ?\", \"answer\": \"") + string(array1.[index2D1,index2D2]) + ("\"") + hint + (" }")
   | 4 ->  let array1 = [| for i in 1 .. 5 -> (foo 1 9) |]
           let array2 = [| for i in 1 .. 5 -> (foo 1 9) |]
           let index1D1 = (foo 0 4)
           let index1D2 = (foo 0 4)
           let arrayResult = (array1.[index1D1]) + (array2.[index1D2])
-          ("{ \"question\": \"let array1 = ") + ConvertToString array1 + ("\\nlet array2 = ") + ConvertToString array2 + ("\\nlet addition = ")
-           + string(array1.[index1D1]) + (" + array2.[string(index1D2)]\\naddition = ?\", \"answer\": \"")
-           + string(arrayResult) + ("\"") + hint + (" }")     
+          ("{ \"question\": \"let array1 = ") + (convertToString array1) + ("\\nlet array2 = ") + convertToString array2 
+          + ("\\nlet addition = array1.[") + string(index1D1) + ("] + array2.[") + string(index1D2) + ("]\\n\\naddition = ?\", \"answer\": \"")
+          + string(arrayResult) + ("\"") + hint + (" }")     
   | 5 ->  let array1 = [| for i in 1 .. (foo 5 9) -> (foo 1 9) |]
           let randStep = (foo 1 4)
           let mutable count = 0
           for i in 0..randStep..(array1.Length - 1) do
             count <- count + array1.[i]
-          ("{ \"question\": \"let array1 = ") + ConvertToString array1 + ("\\nlet mutable count = 0\\nfor i in 0..")
-           + string(randStep) + ("..(array1.Length - 1) do  count <- count + array1.[i]\\ncount = ?\", \"answer\": \"")
+          ("{ \"question\": \"let array1 = ") + (convertToString array1) + ("\\nlet mutable count = 0\\nfor i in 0..")
+           + string(randStep) + ("..(array1.Length - 1) do\\n  count <- count + array1.[i]\\n\\ncount = ?\", \"answer\": \"")
            + string(count) + ("\"") + hint + (" }")
   | _ ->  let array1 = [|0;1;2;3;4|]
           let rand1 = foo 0 4
-          ("{ \"question\": \"let array1 = ") + string(array1) + ("\\nIndex ") + string(rand1)
+          ("{ \"question\": \"let array1 = ") + (convertToString array1) + ("\\n\\nIndex ") + string(rand1)
            + (" = ?\", \"answer\": \"") + string(array1.[rand1]) + ("\"") + hint + (" }")
 
 

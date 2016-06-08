@@ -6,6 +6,20 @@ open System
 
 let Rnd = System.Random()
 
+let convertToString (l: 'a seq) = "[|" + System.String.Join("; ", l) + "|]"
+
+let flatten (A: 'a[,]) = A |> Seq.cast<'a>
+
+let getRow r (A:_[,]) =
+    flatten A.[r..r,*] |> Seq.toArray  
+
+let flattenToString (A: 'a[,]) =
+    let mutable str = ""
+    for i in 0..A.GetLength(0)-2 do
+      str <- str + convertToString (getRow i A) + ";\\n"
+    str <- "[|" + str + (convertToString (getRow (A.GetLength(0)-1) (A))) + "|]"
+    str
+
 let Result x =
   match x with
     | 1 -> Rnd.Next(2 , 3)
@@ -14,8 +28,6 @@ let Result x =
     | 4 -> Rnd.Next(7 , 9)
     | 5 -> Rnd.Next(9 , 11)
     | _ -> failwith "LEL"
-
-
 
 let M1 x =
   let mutable dance = Array2D.create (x) (x) 1.0
@@ -37,8 +49,6 @@ let M2 x =
       dance2.[i,r] <- p
   dance2
 
-
-
 let MatrixProduct (A,B) =
   let fin = Array2D.create (Array2D.length1 A) (Array2D.length2 B) 0.0
   for r in 0..(Array2D.length1 A)-1  do
@@ -53,8 +63,8 @@ let Mega x =
   let ma1 = M1 k
   let ma2 = M2 k
 
-  ("{ \"question\": \"") + (string(ma1)) + ("\\n") + (string(ma2))
-   + ("\"\\n, \"answer\": \"") + (string(MatrixProduct(ma1,ma2))) + ("\", \"hint\": \"Go at it\" }")
+  ("{ \"question\": \"") + (flattenToString ma1) + ("\\n\\n") + (flattenToString ma2)
+   + ("\", \"answer\": \"") + (string(MatrixProduct(ma1,ma2))) + ("\", \"hint\": \"Go at it\" }")
 
   //MatrixProduct (ma1,ma2) 
 
