@@ -64,7 +64,7 @@ let Mega x =
   let ma2 = M2 k
 
   ("{ \"question\": \"") + (flattenToString ma1) + ("\\n\\n") + (flattenToString ma2)
-   + ("\", \"answer\": \"") + (string(MatrixProduct(ma1,ma2))) + ("\", \"hint\": \"Go at it\" }")
+   + ("\", \"answer\": \"") + (flattenToString (MatrixProduct(ma1,ma2))) + ("\", \"hint\": \"Go at it\" }")
 
   //MatrixProduct (ma1,ma2) 
 
