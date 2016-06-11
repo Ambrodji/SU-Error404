@@ -179,7 +179,7 @@ public class GameServlet extends HttpServlet {
 		if (result == null || (result != null && result.isEmpty())) {
 			System.out.println("GameServlet: It was not possible to retrieve an answer from " + prog.getFileName() + " using evalAnswer. Do you have an environment installed for running F# programs? Returning false");
 		}
-		if (result.trim().toLowerCase().equals(Conf.getInstance().getProgValueTrue())) {
+		if (result.trim().toLowerCase().equals(Conf.getInstance().getProgValueTrue().trim().toLowerCase())) {
 			correct = true;
 		}
 		return correct;
